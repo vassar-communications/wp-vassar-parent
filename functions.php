@@ -650,7 +650,20 @@ if ( function_exists( 'lazyblocks' ) ) :
 endif;
 
 
+add_filter( 'pre_get_document_title', 'filter_document_title' );
 
+function filter_document_title( $title ) {
+	global $wp_query;
+	$content_id = $wp_query->post->ID;
+
+	$page_title = get_post_meta($content_id, 'page_longtitle', true);
+	if ($page_title) {
+		$site_name = get_bloginfo('name');
+		return $page_title.' – '.$site_name;
+	} else { 
+		return $title; 
+	}
+}
 
 
 

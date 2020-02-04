@@ -9,9 +9,18 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="post__header">
-		<?php the_title( '<h1 class="page__title">', '</h1>' ); ?>
+<article id="post-<?php the_ID(); ?>" <?php post_class('article--page'); ?>>
+	<header class="header page__header">
+		<?php $page_title = get_post_meta($post->ID, 'page_longtitle', true);
+		if ($page_title) {
+			echo '<h1 class="page__title">'.$page_title.'</h1>';
+		} else { 
+			the_title( '<h1 class="page__title">', '</h1>' );		 
+		}
+		?>
+
+
+		<?php // the_title( '<h1 class="page__title">', '</h1>' ); ?>
 	</header><!-- .entry-header -->
 
 	<?php vassar_post_thumbnail(); ?>
