@@ -388,11 +388,11 @@ function filter_the_content_in_the_main_loop( $content ) {
 	
 		/*	Only do this if the page is an FAQs page. */
 	
-		if(strpos($page_title, "FAQ") !== false) {
+		if(strpos($page_title, "FAQs") !== false) {
 	
 			$dom_document = new DOMDocument();
 			@$dom_document->loadHTML($content);
-			$headers = $dom_document->getElementsByTagName('h2');
+			$headers = $dom_document->getElementsByTagName('h3');
 		
 			foreach ($headers as $header) {
 				$header->setAttribute("align", "left");
