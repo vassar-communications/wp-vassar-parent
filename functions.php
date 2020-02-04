@@ -410,7 +410,7 @@ function filter_the_content_in_the_main_loop( $content ) {
 				/*	Add IDs to each h2 tag. This feels like a clumsy way of doing it, and if I knew more about DOMDoc, I might be able to have it assign attributes to specific nodes. That method is taking longer than I wanted, though, so I'll go with ireplace for now. 
 				*/
 		
-			    $the_tag = '<h2>'.$value.'</h2>';
+			    $the_tag = '<h3>'.$value.'</h3>';
 			    $the_tag_with_id = '<h2 id="'.$slug.'">'.$value.'</h2>';
 			    	    
 			    $content = str_ireplace($the_tag, $the_tag_with_id, $content);
