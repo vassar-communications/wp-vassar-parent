@@ -342,9 +342,23 @@ add_filter('widget_update_callback', 'kk_in_widget_form_update',5,3);
 //add class names (default priority, one parameter)
 add_filter('dynamic_sidebar_params', 'kk_dynamic_sidebar_params');
 
-//	http://www.seanbehan.com/how-to-slugify-a-string-in-php/
 function slugify($string){
-    return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
+	// /[^A-Za-z0-9-]+/
+	//     $final_string = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
+	
+	//	Get rid of multiple spaces
+	$final_string = str_ireplace('  ', ' ', $string);
+
+	//	target all alphanumerics
+	//	https://stackoverflow.com/a/17947853/6784304
+	$replace_pattern = '/\W|_/';
+    $final_string = strtolower(trim(preg_replace($replace_pattern, '-', $final_string), '-'));
+
+	//	get rid of multiple hyphens because I'm OCD about this sort of thing
+	//	https://stackoverflow.com/a/29865564/6784304	
+    $final_string = preg_replace('/-+/', '-', $final_string);
+    
+    return $final_string;
 }
 
 function my_gallery_shortcode( $output = '', $atts = null, $instance = null ) {
@@ -377,10 +391,19 @@ add_filter( 'the_content', 'filter_the_content_in_the_main_loop' );
 
 function filter_the_content_in_the_main_loop( $content ) {
 	
+	/*	Link phone numbers */
+	
 	$pattern = '/\(?(\d{3})\)?[-. ](\d{3})[-.](\d{4})/';
 	$replacement = '<a href="tel:+1$1$2$3">($1) $2-$3</a>';
 	$content = preg_replace($pattern, $replacement, $content);
 	
+
+	/*	Strip out target=new */
+
+	$content = preg_replace("_<a href=\"(.+?)\"((\w+=\".+?\")|\s*)*>_si", "<a href=\"$1\">", $content);
+
+	/*	FAQ formatting */
+		
 	if ( is_singular() && in_the_loop() && is_main_query() ) {
 		global $post;
 		$post_id = $post->ID;
@@ -400,6 +423,9 @@ function filter_the_content_in_the_main_loop( $content ) {
 			}
 			
 			foreach ($table_of_contents as &$value) {
+
+				//	Gets rid of any wonky characters that might choke the script
+				$value = utf8_decode($value);
 				
 				$slug = slugify($value);
 				
