@@ -79,12 +79,13 @@ get_sidebar();
 ?>
 
 </div>
+
 <nav id="site-navigation" class="u-NavSite u-NavSite__main">
 	<a class="menu-toggle" href="#primary-menu" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'vassar' ); ?></a>
 	<?php
 	wp_nav_menu( array(
 		'theme_location' => 'menu-1',
-		'menu_id'        => 'primary-menu',
+		'menu_id'        => 'Main Navigation',
 	) );
 	?>
 </nav><!-- #site-navigation -->
@@ -108,84 +109,11 @@ get_sidebar();
 <nav class="u-NavSite u-NavSite__secondary" id="s-navigation" tabindex="-1" aria-hidden="true">
 
 <?php
-/*
-//	Does this page have sidenav?
-if ($post->post_parent)	{
-	$ancestors=get_post_ancestors($post->ID);
-	$root=count($ancestors)-1;
-	$parent = $ancestors[$root];
-	
-} else {
-	$parent = $post->ID;
-}
 
-$subnav = wp_list_pages(array('child_of' => $parent, 'title_li' => '', 'echo' => false));
-if($subnav) $subnav = '<ul class="nav-menu--secondary">'.$subnav.'</ul>';
-
-/*	Why is this global? Because I want to perform this operation only once, but I need access to the output in two places: here (to determine whether or not the page has subnav and should output a 'has-subnav' class) and in index, where the subnav will actually be displayed.
-*/
-
-// define('SUBNAV', $subnav);
-
-//	check to see if has children instead
-
-
-global $post;     // if outside the loop
-
-if ( is_page() && $post->post_parent ) {
-    // This is a subpage
-    //	We'll need the root-level parent, so we can display
-    //	the entire hierarchy from that point downwards.
-    //	Hide the non-open menu items with CSS.
-
-/*
-	$parent_post_id = $post->post_parent;
-    $parent_post = get_post($parent_post_id);
-    $parent_post_title = $parent_post->post_title;
-*/
-
-	//	https://css-tricks.com/snippets/wordpress/find-id-of-top-most-parent-page/
-	$ancestors=get_post_ancestors($post->ID);
-	$root=count($ancestors)-1;
-	$parent_id = $ancestors[$root];
-
-    $parent_post = get_post($parent_id);
-    $parent_post_title = $parent_post->post_title;
-
-	$args = array(
-	    'menu'    => 'primary-menu',
-	    'submenu' => $parent_post_title,
-	);
-	
-	wp_nav_menu( $args );
-} else {
-    // This is not a subpage
-
-	$args = array(
-	    'menu'    => 'primary-menu',
-	    'submenu' => get_the_title(),
-	);
-	
-	wp_nav_menu( $args );
-
-}
-
-
-/*
-if ($post->post_parent)	{
-	$parent_post_id = $post->post_parent;
-    $parent_post = get_post($parent_post_id);
-    $parent_post_title = $parent_post->post_title;
-
-	$args = array(
-	    'menu'    => 'primary-menu',
-	    'submenu' => $parent_post_title,
-	);
-	
-	wp_nav_menu( $args );
-}
-*/
-//	echo SUBNAV;
+wp_nav_menu( array(
+  'menu'     => 'Main Navigation',
+  'sub_menu' => true
+) );
 
 ?>
 
