@@ -1,7 +1,14 @@
 jQuery(document).ready(function(){
-	/*	randomize banner */
+
+
+	/*	Browser detection
+		=================
+		Yes yes yes you don't want to rely too heavily on this
+	*/
+	//	http://jsfiddle.net/jlubean/dL5cLjxt/
+	var is_safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+	var is_ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStr
 	
-	var banner = Math.floor((Math.random() * 5) + 1);
-	banner = 'url(/wp-content/themes/vassar/assets/images/banners/' + banner + '.jpg)';
-	document.documentElement.style.setProperty('--banner', banner);
+	if(is_safari) jQuery( 'html' ).addClass( 'is-safari' );
+	if(is_ios) { alert("yes"); jQuery( 'html' ).addClass( 'is-ios' ); }
 });

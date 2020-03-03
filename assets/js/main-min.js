@@ -1,1 +1,1 @@
-jQuery(document).ready((function(){var e=Math.floor(5*Math.random()+1);e="url(/wp-content/themes/vassar/assets/images/banners/"+e+".jpg)",document.documentElement.style.setProperty("--banner",e)}));
+jQuery(document).ready((function(){var a=!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/),e=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStr;a&&jQuery("html").addClass("is-safari"),e&&(alert("yes"),jQuery("html").addClass("is-ios"))}));
