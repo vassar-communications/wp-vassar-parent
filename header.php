@@ -21,7 +21,7 @@ $additional_classes = '';
 
 //	First of all: to subnav or not to subnav?
 
-if(SUBNAV) $additional_classes .= ' has-subnav';
+if(has_subpage()) $additional_classes .= ' has-subnav';
 else $additional_classes .= ' no-subnav';
 
 //	Now then; do we have a sidebar or not?

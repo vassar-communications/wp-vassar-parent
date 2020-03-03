@@ -14,7 +14,7 @@
 		<?php
 			
 		if ( is_singular() ) :
-			the_title( '<h1 class="page__title">', '</h1>' );
+			the_title( '<h1 class="page__title u-pageTitle">', '</h1>' );
 		else :
 			the_title( '<h2 class="post__title"><a class="post__titleLink" href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 		endif; ?>

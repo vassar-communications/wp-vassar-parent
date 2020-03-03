@@ -1,0 +1,1 @@
+jQuery(document).ready((function(){var e=Math.floor(5*Math.random()+1);e="url(/wp-content/themes/vassar/assets/images/banners/"+e+".jpg)",document.documentElement.style.setProperty("--banner",e)}));

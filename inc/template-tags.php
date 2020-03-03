@@ -204,7 +204,7 @@ function site_title() {
 		
 		if(defined('SITE__CUSTOM_HEADER_HOME'))
 			$header .= SITE__CUSTOM_HEADER_HOME;
-		else if (defined(SITE__CUSTOM_HEADER))
+		else if (defined('SITE__CUSTOM_HEADER'))
 			$header .= SITE__CUSTOM_HEADER;
 		else
 			$header .= get_bloginfo( 'name' );

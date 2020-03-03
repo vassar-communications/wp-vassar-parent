@@ -13,9 +13,9 @@
 	<header class="header page__header">
 		<?php $page_title = get_post_meta($post->ID, 'page_longtitle', true);
 		if ($page_title) {
-			echo '<h1 class="page__title">'.$page_title.'</h1>';
+			echo '<h1 class="page__title u-pageTitle">'.$page_title.'</h1>';
 		} else { 
-			the_title( '<h1 class="page__title">', '</h1>' );		 
+			the_title( '<h1 class="page__title u-pageTitle">', '</h1>' );		 
 		}
 		?>
 

@@ -138,16 +138,37 @@ function vassar_widgets_init() {
 }
 add_action( 'widgets_init', 'vassar_widgets_init' );
 
+//	https://colorlib.com/wp/load-wordpress-jquery-from-google-library/
+function replace_jquery() {
+	if (!is_admin()) {
+		// comment out the next two lines to load the local copy of jQuery
+		wp_deregister_script('jquery');
+		wp_register_script('jquery', get_template_directory_uri() . '/assets/js/libraries/jquery.min.js', false, '3.4.1');
+		wp_enqueue_script('jquery');
+	}
+}
+add_action('init', 'replace_jquery');
+
 /**
  * Enqueue scripts and styles.
  */
+ 
+/*	Register early */
+
+function register_vassar_scripts() {
+	wp_register_script( 'flickity', get_template_directory_uri() . '/assets/js/libraries/flickity/flickity.pkgd.min.js', array('jquery'), '20151215', true );
+	wp_register_style( 'flickity-style', get_template_directory_uri() . '/assets/js/libraries/flickity/flickity.css');
+	wp_register_script( 'waypoints', get_template_directory_uri() . '/assets/js/libraries/jquery.waypoints.min.js', array('jquery'), '20151215', true );
+}
+add_action( 'wp_loaded', 'register_vassar_scripts' );
+
 function vassar_scripts() {
+	wp_enqueue_style( 'basic-style', get_template_directory_uri() . '/assets/css/basics.css' );
 	wp_enqueue_style( 'vassar-style', get_stylesheet_uri() );
-	wp_register_script( 'flickity', get_template_directory_uri() . '/js/flickity.pkgd.min.js', array('jquery'), '20151215', true );
-	wp_register_script( 'waypoints', get_template_directory_uri() . '/js/jquery.waypoints.min.js', array('jquery'), '20151215', true );
-	wp_enqueue_script( 'main-js', get_template_directory_uri() . '/js/main.js', array('jquery'), '20151215', true );
-    wp_register_script( 'site', get_stylesheet_directory_uri() . '/assets/js/site.js',  array('jquery'), time() ); 
-    
+	wp_enqueue_script( 'main-js', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '20151215', true );
+	wp_enqueue_script( 'site-js', get_stylesheet_directory_uri() . '/assets/js/site.js',  array('jquery'), time() );
+	wp_dequeue_style( 'wp-block-library' );
+
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
@@ -746,5 +767,19 @@ function my_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
   } else {
     return $sorted_menu_items;
   }
+}
+
+// https://clicknathan.com/web-design/wordpress-has_subpage-function/
+function has_subpage() {
+        global $post;
+	if($post->post_parent){
+		$children = wp_list_pages("title_li=&child_of=".$post->post_parent."&echo=0");
+	} else {
+		$children = wp_list_pages("title_li=&child_of=".$post->ID."&echo=0");
+	} if ($children) {
+		return true;
+	} else {
+		return false;
+	}
 }
 

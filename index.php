@@ -10,6 +10,7 @@
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package Vassar
+ * 
  */
 
 get_header();
@@ -23,11 +24,11 @@ get_header();
 				?>
 				<header>
 					<?php if (is_archive()) {
-						the_archive_title( '<h1 class="page__title">', '</h1>' );
+						the_archive_title( '<h1 class="page__title u-pageTitle">', '</h1>' );
 						the_archive_description( '<div class="archive-description">', '</div>' );
 					}
 					if ( is_home() && ! is_front_page() ) : 
-						echo '<h1 class="page__title">';
+						echo '<h1 class="page__title u-pageTitle">';
 						single_post_title();
 						echo '</h1>';
 					endif; ?>
@@ -81,11 +82,11 @@ get_sidebar();
 </div>
 
 <nav id="site-navigation" class="u-NavSite u-NavSite__main">
-	<a class="menu-toggle" href="#primary-menu" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'vassar' ); ?></a>
+	<a class="menu-toggle" href="#primary-menu" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Menu', 'vassar' ); ?></a>
 	<?php
 	wp_nav_menu( array(
 		'theme_location' => 'menu-1',
-		'menu_id'        => 'Main Navigation',
+		'menu_id'        => 'primary-menu',
 	) );
 	?>
 </nav><!-- #site-navigation -->
@@ -112,7 +113,10 @@ get_sidebar();
 
 wp_nav_menu( array(
   'menu'     => 'Main Navigation',
-  'sub_menu' => true
+  'sub_menu' => true,
+  'container_class' => 'menu-subnav-container',
+  'menu_id' => '',
+  'menu_class' => 'u-NavSite__level--2',
 ) );
 
 ?>

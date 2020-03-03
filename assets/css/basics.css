@@ -1,0 +1,19 @@
+body,
+figure {
+	margin: 0;
+}
+
+
+/*	Flickity overrides */
+
+.wp-block-gallery,
+.flickity-slider .blocks-gallery-item, 
+.flickity-enabled {
+    display: block;
+}
+.wp-block-gallery .blocks-gallery-item img {
+	display: inline;
+}
+.blocks-gallery-item {
+/*	height: 100% !important; */
+}
