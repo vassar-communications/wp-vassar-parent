@@ -159,6 +159,8 @@ function register_vassar_scripts() {
 	wp_register_script( 'flickity', get_template_directory_uri() . '/assets/js/libraries/flickity/flickity.pkgd.min.js', array('jquery'), '20151215', true );
 	wp_register_style( 'flickity-style', get_template_directory_uri() . '/assets/js/libraries/flickity/flickity.css');
 	wp_register_script( 'waypoints', get_template_directory_uri() . '/assets/js/libraries/jquery.waypoints.min.js', array('jquery'), '20151215', true );
+	wp_register_script( 'pivot', 'https://cdn.rawgit.com/wnda/pivot/master/pivot.js', array('jquery'), '20151215', true );
+	wp_register_script( 'wordify', get_template_directory_uri() . '/assets/js/libraries/wordify.js', array('jquery'), '20151215', true );
 }
 add_action( 'wp_loaded', 'register_vassar_scripts' );
 
