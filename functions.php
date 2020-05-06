@@ -1,23 +1,61 @@
 <?php
 
-/*
-	
-
-
-*/
-
-function cfg($constant) {
-	/*	cfg() checks if a setup constant exists before trying to use it. I need to use this on every setup var I have, because if I don't, there's going to be a lot of warnings, and people would need to have every setup var in their file whether they're using it or not. That's cluttery.	
-	*/
-	if (defined($constant)) 
-		return constant($constant);
-	else return false;
-}
-
 $child_path = get_stylesheet_directory();
 $child_path .= "/_config.php";
 
 if (file_exists($child_path)) include($child_path);
+
+
+
+/*
+	
+This whole thing needs to be organized with an index at the front.
+
+	* Basic Utilities
+
+
+*/
+
+/*	BASIC UTILITIES
+	=============== */
+
+/*	Config
+	------
+
+	These handle settings the theme designer has specified in the _config.php file.
+	
+	Note that _config.php sits in the *child* theme, not the parent theme. That's because the intention is for all site-specific stuff - design, local functionality, etc - to be contained in the child theme. The parent theme should contain no functionality specific to any particular site. */
+
+
+/* Use cfg() to check/retrieve config settings. If $get_value is false, cfg() only returns "true" if a setting exists. If $get_value is true, cfg() returns the actual value of that setting. If a setting doesn't exist, cfg() returns false.
+	
+	$constant - string. The name of the setting you're checking.
+	$get_value - boolean, optional.
+
+*/
+
+function cfg($setting, $get_value = false, $default = '') {
+	
+	//	First: Is the setting even defined - that is, present in the config file?
+	if (defined($setting)) {
+		
+		//	Okay, it's in settings, but is it true?
+		if(constant($setting)) {
+
+			//	And finally, do we need to know what its value actually is - say, if it's a string?			
+			if($get_value) {
+				return constant($setting);
+			}
+			else {
+				return true;
+			}
+		}
+		else return false;
+	}
+	else {
+		return false;
+	}
+}
 
 
 
@@ -232,6 +270,26 @@ add_action('get_header', 'remove_admin_login_header');
 function remove_admin_login_header() {
 	remove_action('wp_head', '_admin_bar_bump_cb');
 }
+
+
+/*	FILTERS
+	=======
+
+	The following functions modify default WordPress content.
+*/
+
+/*	Remove the "Category:" prefix from archive pages */
+
+function prefix_category_title( $title ) {
+    if ( is_category() ) {
+        $title = single_cat_title( '', false );
+    }
+    return $title;
+}
+add_filter( 'get_the_archive_title', 'prefix_category_title' );
+
+
+
 
 
 /*	Widgetry

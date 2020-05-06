@@ -13,8 +13,11 @@ if ( ! function_exists( 'vassar_posted_on' ) ) :
 	 */
 	function vassar_posted_on() {
 		$time_string = '<time class="post__date published updated" datetime="%1$s">%2$s</time>';
-		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
-			$time_string = '<time class="post__date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+		
+		if(constant('POST__SHOW_MOD_DATE')) {
+			if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
+				$time_string = '<time class="post__date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+			}
 		}
 
 		$time_string = sprintf( $time_string,
@@ -26,11 +29,9 @@ if ( ! function_exists( 'vassar_posted_on' ) ) :
 
 		$posted_on = sprintf(
 			/* translators: %s: post date. */
-			'<b class="label label--cats">Posted on %s</b>',
-			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
-		);
+			'<b class="label label--cats">'.cfg('POST__DATE__LABEL', true, 'posted').' %s</b>', $time_string);
 
-		echo '<span class="post__metaItem post__dateContainer">' . $posted_on . '</span>'; // WPCS: XSS OK.
+		echo '<div class="post__metaItem post__dateContainer">' . $posted_on . '</div>'; // WPCS: XSS OK.
 
 	}
 endif;
@@ -46,7 +47,7 @@ if ( ! function_exists( 'vassar_posted_by' ) ) :
 			'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
 		);
 
-		echo '<span class="post__metaItem byline"> ' . $byline . '</span>'; // WPCS: XSS OK.
+		echo '<div class="post__metaItem byline"> ' . $byline . '</div>'; // WPCS: XSS OK.
 
 	}
 endif;
@@ -58,23 +59,27 @@ if ( ! function_exists( 'vassar_entry_meta' ) ) :
 	function vassar_entry_meta() {
 		// Hide category and tag text for pages.
 		if ( 'post' === get_post_type() ) {
-			/* translators: used between list items, there is a space after the comma */
-			$categories_list = get_the_category_list( esc_html__( ', ', 'vassar' ) );
-			if ( $categories_list ) {
-				/* translators: 1: list of categories. */
-				printf( '<span class="post__metaItem post__categories">' . '<b class="label label--cats">Posted in</b> %1$s' . '</span>', $categories_list ); // WPCS: XSS OK.
+			if(cfg('POST__SHOW_CATEGORIES')) {
+				/* translators: used between list items, there is a space after the comma */
+				$categories_list = get_the_category_list( esc_html__( ', ', 'vassar' ) );
+				if ( $categories_list ) {
+					/* translators: 1: list of categories. */
+					printf( '<div class="post__metaItem post__categories">' . '<b class="label label--cats">'.cfg('POST__CATEGORIES__LABEL', true).'</b> %1$s' . '</div>', $categories_list ); // WPCS: XSS OK.
+				}
 			}
 
-			/* translators: used between list items, there is a space after the comma */
-			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'vassar' ) );
-			if ( $tags_list ) {
-				/* translators: 1: list of tags. */
-				printf( '<span class="post__metaItem post__tags">' . '<b class="label label--tags">Tagged</b> %1$s' . '</span>', $tags_list ); // WPCS: XSS OK.
+			if(cfg('POST__SHOW_TAGS')) {
+				/* translators: used between list items, there is a space after the comma */
+				$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'vassar' ) );
+				if ( $tags_list ) {
+					/* translators: 1: list of tags. */
+					printf( '<div class="post__metaItem post__tags">' . '<b class="label label--tags">'.cfg('POST__TAGS__LABEL', true).'</b> %1$s' . '</div>', $tags_list ); // WPCS: XSS OK.
+				}
 			}
 		}
 
 		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
-			echo '<span class="post__metaItem post__comments">';
+			echo '<div class="post__metaItem post__comments">';
 			comments_popup_link(
 				sprintf(
 					wp_kses(
@@ -89,14 +94,14 @@ if ( ! function_exists( 'vassar_entry_meta' ) ) :
 					get_the_title()
 				)
 			);
-			echo '</span>';
+			echo '</div>';
 		}
 
 		edit_post_link(
 			sprintf(
 				wp_kses(
 					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Edit <span class="screen-reader-text">%s</span>', 'vassar' ),
+					__( 'Edit post', 'vassar' ),
 					array(
 						'span' => array(
 							'class' => array(),

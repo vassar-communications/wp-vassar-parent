@@ -23,8 +23,9 @@
 	<?php if ( 'post' === get_post_type() ) : ?>
 		<div class="post__meta">
 			<?php
+				
 				vassar_posted_on();
-				vassar_posted_by();
+				if(cfg('POST__SHOW_AUTHOR')) vassar_posted_by();
 				vassar_entry_meta();
 			?>
 		</div><!-- .entry-meta -->
