@@ -79,22 +79,24 @@ if ( ! function_exists( 'vassar_entry_meta' ) ) :
 		}
 
 		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
-			echo '<div class="post__metaItem post__comments">';
-			comments_popup_link(
-				sprintf(
-					wp_kses(
-						/* translators: %s: post title */
-						__( 'Leave a Comment<span class="screen-reader-text"> on %s</span>', 'vassar' ),
-						array(
-							'span' => array(
-								'class' => array(),
-							),
-						)
-					),
-					get_the_title()
-				)
-			);
-			echo '</div>';
+			if(cfg('SITE__ALLOW_COMMENTS')) {
+				echo '<div class="post__metaItem post__comments">';
+				comments_popup_link(
+					sprintf(
+						wp_kses(
+							/* translators: %s: post title */
+							__( 'Leave a Comment<span class="screen-reader-text"></span>', 'vassar' ),
+							array(
+								'span' => array(
+									'class' => array(),
+								),
+							)
+						),
+						get_the_title()
+					)
+				);
+				echo '</div>';
+			}
 		}
 
 		edit_post_link(
@@ -162,22 +164,24 @@ if ( ! function_exists( 'vassar_entry_footer' ) ) :
 	 */
 	function vassar_entry_footer() {
 		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
-			echo '<span class="comments-link">';
-			comments_popup_link(
-				sprintf(
-					wp_kses(
-						/* translators: %s: post title */
-						__( 'Leave a Comment<span class="screen-reader-text"> on %s</span>', 'vassar' ),
-						array(
-							'span' => array(
-								'class' => array(),
-							),
-						)
-					),
-					get_the_title()
-				)
-			);
-			echo '</span>';
+			if(cfg('SITE__ALLOW_COMMENTS')) {
+				echo '<span class="comments-link">';
+				comments_popup_link(
+					sprintf(
+						wp_kses(
+							/* translators: %s: post title */
+							__( 'Leave a Comment', 'vassar' ),
+							array(
+								'span' => array(
+									'class' => array(),
+								),
+							)
+						),
+						get_the_title()
+					)
+				);
+				echo '</span>';
+			}
 		}
 
 		edit_post_link(

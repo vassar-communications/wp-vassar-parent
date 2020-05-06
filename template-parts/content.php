@@ -59,9 +59,11 @@
 	</div><!-- .entry-content -->
 
 	<?php
-		if ( comments_open() || get_comments_number() ) :
-			comments_template();
-		endif;
+		if(cfg('SITE__ALLOW_COMMENTS')) {
+			if ( comments_open() || get_comments_number() ) :
+				comments_template();
+			endif;
+		}
 	?>
 
 </article><!-- #post-<?php the_ID(); ?> -->
