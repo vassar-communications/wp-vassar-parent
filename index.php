@@ -91,22 +91,6 @@ get_sidebar();
 	?>
 </nav><!-- #site-navigation -->
 
-<style>
-
-.u-NavSite__secondary ul.children {
-	display: none;
-}
-.u-NavSite__secondary .page_item_has_children.current_page_item a + .children,
-.u-NavSite__secondary .page_item_has_children.current_page_ancestor a + .children {
-	display: block;
-}
-.u-NavSite__secondary .current_page_item > a {
-	background: #000;
-	color: #fff;
-}
-
-</style>
-
 <nav class="u-NavSite u-NavSite__secondary" id="s-navigation" tabindex="-1" aria-hidden="true">
 
 <?php

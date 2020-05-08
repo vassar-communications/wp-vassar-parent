@@ -35,7 +35,10 @@
 
 	<div class="entry__content">
 		<?php
-		if (is_front_page() || is_singular() || is_home()) {
+			
+		$show_summary = cfg('POST__SHOW_SUMMARY');
+					
+		if ((is_front_page() || is_singular() || is_home()) && !$show_summary) {
 			the_content( sprintf(
 				wp_kses(
 					/* translators: %s: Name of current post. Only visible to screen readers */
@@ -48,7 +51,6 @@
 				),
 				get_the_title()
 			) );
-	
 			wp_link_pages( array(
 				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'vassar' ),
 				'after'  => '</div>',
