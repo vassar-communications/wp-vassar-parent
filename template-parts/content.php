@@ -9,7 +9,23 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<?php
+
+if(cfg('POST__THUMB_URL_INLINE')) {
+	$article_data_attr = 'data-image-url="'.get_the_post_thumbnail_url().'"';
+}	
+	
+?>
+
+
+<?php
+	if(cfg('POST__THUMB_URL_CSSVAR')) {
+		echo '<style>#post-'.get_the_ID().' { --article-featured-img: url('.get_the_post_thumbnail_url().'); }</style>';
+	}
+?>
+
+<article id="post-<?php the_ID(); ?>" <?php echo $article_data_attr; post_class(); ?>>
+
 	<header class="post__header">
 		<?php
 			
@@ -31,7 +47,9 @@
 		</div><!-- .entry-meta -->
 	<?php endif; ?>
 
-	<?php vassar_post_thumbnail(); ?>
+	<?php
+		if(!cfg('POST__HIDE_FEATURED_IMG')) vassar_post_thumbnail();
+	?>
 
 	<div class="entry__content">
 		<?php

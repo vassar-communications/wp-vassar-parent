@@ -431,6 +431,38 @@
 		"oAP": "/template-parts/content.php",
 		"oF": 0
 		},
+	"/template-parts/format-audio copy.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/template-parts/format-audio copy.php",
+		"oF": 0
+		},
+	"/template-parts/format-audio.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/template-parts/format-audio.php",
+		"oF": 0
+		},
+	"/template-parts/format-image.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/template-parts/format-image.php",
+		"oF": 0
+		},
+	"/template-parts/format-video.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/template-parts/format-video.php",
+		"oF": 0
+		},
 	"/unused-archive.php": {
 		"cB": 0,
 		"ft": 8192,

@@ -12,7 +12,9 @@ if (file_exists($child_path)) include($child_path);
 This whole thing needs to be organized with an index at the front.
 
 	* Basic Utilities
-
+	
+	* Functionalities
+		* Post types
 
 */
 
@@ -56,6 +58,23 @@ function cfg($setting, $get_value = false, $default = '') {
 		return false;
 	}
 }
+
+
+
+/*	FUNCTIONALITIES
+	=============== */
+
+	/*	Post types */
+
+
+if(cfg('POST_TYPES')) {
+	function childtheme_formats(){
+	     add_theme_support( 'post-formats', cfg('POST_TYPES', true));
+	}
+	add_action( 'after_setup_theme', 'childtheme_formats', 11 );	
+}
+
+
 
 
 

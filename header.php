@@ -14,10 +14,9 @@
 
 <?php
 
-
 //	Here's where we set up the HTML classes.
 
-$additional_classes = '';
+$additional_classes = 'no-js ';
 
 //	First of all: to subnav or not to subnav?
 
@@ -31,6 +30,10 @@ $no_sidebar = get_post_meta($post->ID, 'vpress__no-sidebar', true);
 if($no_sidebar) $additional_classes .= ' no-sidebar';
 else $additional_classes .= ' has-sidebar';
 
+//	On Offices, the blog feature is being used for announcements. Since it's a list of
+//	announcements, we want a more compact layout for each post similar to the standard Vassar news page.
+
+if(!is_singular() && cfg('BLOG__USE_MINIPOST')) $additional_classes .= ' minimal-post-on-frontpage';
 
 ?>
 
