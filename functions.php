@@ -67,9 +67,9 @@ function cfg($setting, $get_value = false, $default = '') {
 	/*	Post types */
 
 
-if(cfg('POST_TYPES')) {
+if(cfg('BLOG__POST_FORMATS')) {
 	function childtheme_formats(){
-	     add_theme_support( 'post-formats', cfg('POST_TYPES', true));
+	     add_theme_support( 'post-formats', cfg('BLOG__POST_FORMATS', true));
 	}
 	add_action( 'after_setup_theme', 'childtheme_formats', 11 );	
 }
