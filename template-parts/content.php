@@ -75,6 +75,11 @@ if(cfg('POST__THUMB_URL_INLINE')) {
 			) );
 		}
 		else the_excerpt();
+		if(cfg('POST__SHOW_READMORE_AFTER_EXCERPT')) {
+		    $readmore_text = cfg('POST__READMORE_AFTER_EXCERPT_TEXT', true, 'Read more');
+		    $readmore_link = get_permalink();
+			echo '<div class="readmore-link__container"><a class="readmore-link" href="'.$readmore_link.'">'.$readmore_text.'</a></div>';
+		}
 		?>
 	</div><!-- .entry-content -->
 

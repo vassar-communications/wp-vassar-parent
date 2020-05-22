@@ -57,11 +57,16 @@ function cfg($setting, $get_value = false, $default = '') {
 		}
 		else return false;
 	}
+	//  If the setting isn't present, but a default value was provided,
+	//  return that default value.
+	else if ($default !== '') {
+		return $default;
+	}
+	//  No setting is defined, and no default value is specified
 	else {
 		return false;
 	}
 }
-
 
 
 /*	FUNCTIONALITIES
