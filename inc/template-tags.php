@@ -131,12 +131,9 @@ if ( ! function_exists( 'vassar_post_thumbnail' ) ) :
 		}
 		?>
 		<div class="post__image">
-		<?php
-		if ( is_singular() ) :
-			?>
-
+		<?php if ( is_singular() ) : ?>
 				<?php the_post_thumbnail(); ?>
-
+		</div>
 		<?php else : ?>
 
 			<a class="post__imageLink" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">

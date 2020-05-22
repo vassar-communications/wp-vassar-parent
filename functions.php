@@ -16,6 +16,9 @@ This whole thing needs to be organized with an index at the front.
 	* Functionalities
 		* Post types
 
+	* WordPress overrides
+		* Excerpt length
+
 */
 
 /*	BASIC UTILITIES
@@ -71,7 +74,7 @@ if(cfg('BLOG__POST_FORMATS')) {
 	function childtheme_formats(){
 	     add_theme_support( 'post-formats', cfg('BLOG__POST_FORMATS', true));
 	}
-	add_action( 'after_setup_theme', 'childtheme_formats', 11 );	
+	add_action( 'after_setup_theme', 'childtheme_formats', 11 );
 }
 
 
@@ -161,6 +164,21 @@ if ( ! function_exists( 'vassar_setup' ) ) :
 	}
 endif;
 add_action( 'after_setup_theme', 'vassar_setup' );
+
+
+
+/*	WORDPRESS OVERRIDES
+	=================== */
+
+if(cfg('POST__EXCERPT_LENGTH')) {
+	function mytheme_custom_excerpt_length( $length ) {
+	    return cfg('POST__EXCERPT_LENGTH', true);
+	}
+	add_filter( 'excerpt_length', 'mytheme_custom_excerpt_length', 999 );
+}
+
+
+
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
