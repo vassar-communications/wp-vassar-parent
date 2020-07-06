@@ -1,4 +1,12 @@
 <?php
+if(cfg('SITE__REDIRECT_ARCHIVES_TO_HOME')) {
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: ".get_bloginfo('url'));
+    exit();
+}
+?>
+
+<?php
 /**
  * The template for displaying archive pages
  *

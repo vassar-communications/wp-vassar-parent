@@ -39,15 +39,57 @@ if(!is_singular() && cfg('BLOG__USE_MINIPOST')) $additional_classes .= ' minimal
 
 <html <?php language_attributes(); ?> <?php body_class($additional_classes); ?>>
 <head>
+	
+	
+	
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-301357-5"></script>
+<script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+ gtag('config', 'UA-301357-5');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WCS4M7');</script>
+<!-- End Google Tag Manager -->
+	
+	
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
+
+	<?php vassar_socialcard(); ?>
+
 	<?php wp_head(); ?>
+
+	<style type="text/css">
+	:root {
+	    <?php if ( get_header_image() ) : ?>
+	        /*  https://developer.wordpress.org/themes/functionality/custom-headers/ */
+	        --site-header-image: url(<?php header_image(); ?>);
+	    <?php endif; ?>
+	}
+	</style>
+
+
 	
 </head>
 
 <body>
+	
+	<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCS4M7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 	
 <?php include(get_template_directory()."/_config.php"); ?>
 	

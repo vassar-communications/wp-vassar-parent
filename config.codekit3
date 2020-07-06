@@ -33,12 +33,39 @@
 		"oAP": "/404.php",
 		"oF": 0
 		},
+	"/_changelog.md": {
+		"cB": 0,
+		"cS": 0,
+		"eF": 1,
+		"eL": 1,
+		"ema": 1,
+		"eSQ": 1,
+		"ft": 4096,
+		"hM": 0,
+		"oA": 1,
+		"oAP": "/_changelog.html",
+		"oF": 0,
+		"oFM": 0,
+		"oS": 0,
+		"pHT": 0,
+		"pME": 1,
+		"rFN": 0,
+		"uCM": 0
+		},
 	"/_config.php": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
 		"oA": 1,
 		"oAP": "/_config.php",
+		"oF": 0
+		},
+	"/archive.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/archive.php",
 		"oF": 0
 		},
 	"/assets/css/basics-min.css": {
@@ -369,6 +396,14 @@
 		"oAP": "/sidebar.php",
 		"oF": 0
 		},
+	"/single.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/single.php",
+		"oF": 0
+		},
 	"/style-min.css": {
 		"aP": 1,
 		"bl": 0,
@@ -463,14 +498,6 @@
 		"oAP": "/template-parts/format-video.php",
 		"oF": 0
 		},
-	"/unused-archive.php": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/unused-archive.php",
-		"oF": 0
-		},
 	"/unused-page.php": {
 		"cB": 0,
 		"ft": 8192,
@@ -485,14 +512,6 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/unused-search.php",
-		"oF": 0
-		},
-	"/unused-single.php": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/unused-single.php",
 		"oF": 0
 		}
 	},

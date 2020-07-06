@@ -7,6 +7,45 @@
  * @package Vassar
  */
 
+
+if ( ! function_exists( 'vassar_socialcard' ) ) :
+	function vassar_socialcard() {
+		global $post;
+		$page_id = $post->ID;
+		if ( has_post_thumbnail( $page_id ) ) :
+		    $image_array = wp_get_attachment_image_src( get_post_thumbnail_id( $page_id ), 'optional-size' );
+		    $image = $image_array[0];
+		else :
+		    $image = get_stylesheet_directory_uri() . '/assets/images/feature-image.png';
+		endif;
+		
+		if(is_single()) {
+			$og_obj = array(
+				"image" => $image,
+				"title" => get_the_title($page_id),
+				"twitter:username" => "_csilverman",
+				"og:url" => get_permalink($page_id),
+				"description" => get_the_excerpt($page_id)
+			);
+		
+			echo socialcard($og_obj);
+		}
+		else {
+			$og_obj = array(
+				"image" => $image,
+				"title" => gw__get_site_title(),
+				"twitter:username" => "_csilverman",
+				"og:url" => esc_url( home_url( '/' ) ),
+				"description" => get_bloginfo( 'description' )
+			);
+		
+			echo socialcard($og_obj);
+		}
+	}
+endif;
+
+
+
 if ( ! function_exists( 'vassar_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time.
