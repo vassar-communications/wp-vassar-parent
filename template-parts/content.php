@@ -55,8 +55,17 @@ if(cfg('POST__THUMB_URL_INLINE')) {
 		<?php
 			
 		$show_summary = cfg('POST__SHOW_SUMMARY');
-					
-		if ((is_front_page() || is_singular() || is_home()) && !$show_summary) {
+
+		if ((is_front_page() || is_archive() || is_home()) && $show_summary )  {
+
+			the_excerpt();
+
+			if(cfg('POST__SHOW_READMORE_AFTER_EXCERPT')) {
+			    $readmore_text = cfg('POST__READMORE_AFTER_EXCERPT_TEXT', true, 'Read more');
+			    $readmore_link = get_permalink();
+				echo '<div class="readmore-link__container"><a class="readmore-link" href="'.$readmore_link.'">'.$readmore_text.'</a></div>';
+			}
+		} else {
 			the_content( sprintf(
 				wp_kses(
 					/* translators: %s: Name of current post. Only visible to screen readers */
@@ -74,12 +83,7 @@ if(cfg('POST__THUMB_URL_INLINE')) {
 				'after'  => '</div>',
 			) );
 		}
-		else the_excerpt();
-		if(cfg('POST__SHOW_READMORE_AFTER_EXCERPT')) {
-		    $readmore_text = cfg('POST__READMORE_AFTER_EXCERPT_TEXT', true, 'Read more');
-		    $readmore_link = get_permalink();
-			echo '<div class="readmore-link__container"><a class="readmore-link" href="'.$readmore_link.'">'.$readmore_text.'</a></div>';
-		}
+
 		?>
 	</div><!-- .entry-content -->
 

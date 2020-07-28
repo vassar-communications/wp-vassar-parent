@@ -264,6 +264,14 @@
 		"oAP": "/inc/jetpack.php",
 		"oF": 0
 		},
+	"/inc/navigation.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/inc/navigation.php",
+		"oF": 0
+		},
 	"/inc/template-functions.php": {
 		"cB": 0,
 		"ft": 8192,

@@ -595,7 +595,7 @@ function filter_the_content_in_the_main_loop( $content ) {
 	
 		/*	Only do this if the page is an FAQs page. */
 	
-		if(strpos($page_title, "FAQs") !== false) {
+		if(strpos($page_title, "FAQ") !== false) {
 	
 			$dom_document = new DOMDocument();
 			@$dom_document->loadHTML($content);

@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-	<div id="primary" class="content-area">
+	<div id="primary" class="u-lContent">
 		<main id="main" class="site-main">
 
 		<?php
@@ -44,8 +44,15 @@ get_header();
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
-	</div>
 
+	
 <?php
 get_sidebar();
+?>
+
+</div>
+
+<?php include(get_template_directory() . '/inc/navigation.php'); ?>
+
+<?php
 get_footer();
