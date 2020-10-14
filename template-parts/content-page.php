@@ -23,7 +23,10 @@
 		<?php // the_title( '<h1 class="page__title">', '</h1>' ); ?>
 	</header><!-- .entry-header -->
 
-	<?php vassar_post_thumbnail(); ?>
+	<?php
+		if(!cfg('PAGE__HIDE_FEATURED_IMG')) vassar_post_thumbnail();
+	?>
+
 
 	<div class="entry__content">
 		<?php

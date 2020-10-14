@@ -76,6 +76,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	        /*  https://developer.wordpress.org/themes/functionality/custom-headers/ */
 	        --site-header-image: url(<?php header_image(); ?>);
 	    <?php endif; ?>
+	    <?php if ( has_post_thumbnail( $post->ID )) : ?>
+	        --page-header-image: url(<?php header_image( $post->ID ); ?>);
+	    <?php endif; ?>
 	}
 	</style>
 
@@ -84,6 +87,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 
 <body>
+
+<?php 
+    global $site_header;
+    
+    if(file_exists($site_header)) {
+        include($site_header);
+    }
+?>
 	
 	<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCS4M7"
@@ -91,7 +102,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 	
-<?php include(get_template_directory()."/_config.php"); ?>
+<?php 
+//  The _config file for this parent theme, not the child theme. Normally, all config variables should go in the child's _config.php file, since they determine the behavior of the site and should be considered part of the design. I'm including a _config for the parent as well, just in case it's needed.
+include(get_template_directory()."/_config.php"); 
+?>
 	
 <div class="PageContent">
 	<div class="PageContentInner">
@@ -103,11 +117,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 			echo site_title();
 
-			$vassar_description = get_bloginfo( 'description', 'display' );
-			if ( $vassar_description || is_customize_preview() ) :
-				?>
-				<p class="site-description"><?php echo $vassar_description; /* WPCS: xss ok. */ ?></p>
-			<?php endif; ?>
+			if (cfg('SITE__HIDE_TAGLINE') !== false) {
+				$vassar_description = get_bloginfo( 'description', 'display' );
+				if ( $vassar_description || is_customize_preview() ) :
+					?>
+			
+					<p class="site-description"><?php echo $vassar_description; /* WPCS: xss ok. */ ?></p>
+				<?php endif; 
+				}
+			?>
+
+
+
 		</div><!-- .site-branding -->
 	</header><!-- #masthead -->
 

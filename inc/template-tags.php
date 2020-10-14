@@ -10,16 +10,24 @@
 
 if ( ! function_exists( 'vassar_socialcard' ) ) :
 	function vassar_socialcard() {
+	    
 		global $post;
 		$page_id = $post->ID;
-		if ( has_post_thumbnail( $page_id ) ) :
+		
+		//  First: Does the page have a specified feature image? If so, use that.
+		if ( has_post_thumbnail( $page_id ) ) {
 		    $image_array = wp_get_attachment_image_src( get_post_thumbnail_id( $page_id ), 'optional-size' );
 		    $image = $image_array[0];
-		else :
-		    $image = get_stylesheet_directory_uri() . '/assets/images/feature-image.png';
-		endif;
+		}
+		//  No? Let's see if the site has a header image set.
+		else if(get_header_image() !== '')
+		    $image = get_header_image();
+		//  Nothing is set anywhere, so we'll use the default image.
+        else
+		    $image = get_stylesheet_directory_uri() . '/assets/images/feature-image.png';            
+		// endif;
 		
-		if(is_single()) {
+		if(is_singular()) {
 			$og_obj = array(
 				"image" => $image,
 				"title" => get_the_title($page_id),
@@ -53,7 +61,7 @@ if ( ! function_exists( 'vassar_posted_on' ) ) :
 	function vassar_posted_on() {
 		$time_string = '<time class="post__date published updated" datetime="%1$s">%2$s</time>';
 		
-		if(cfg('POST__SHOW_MOD_DATE')) {
+		if(cfg('POST__SHOW_MOD_DATE')) {
 			if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
 				$time_string = '<time class="post__date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 			}
@@ -68,7 +76,7 @@ if ( ! function_exists( 'vassar_posted_on' ) ) :
 
 		$posted_on = sprintf(
 			/* translators: %s: post date. */
-			'<b class="label label--cats">'.cfg('POST__DATE__LABEL', true, 'posted').' %s</b>', $time_string);
+			'<b class="label label--date">'.cfg('POST__DATE__LABEL', true, 'posted').'</b>  %s', $time_string);
 
 		echo '<div class="post__metaItem post__dateContainer">' . $posted_on . '</div>'; // WPCS: XSS OK.
 

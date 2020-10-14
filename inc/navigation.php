@@ -2,7 +2,7 @@
 <?php if(!cfg('SITE__NO_NAV')) { ?>
 
 <nav id="site-navigation" class="u-NavSite u-NavSite__main">
-	<a class="menu-toggle" href="#menu" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Menu', 'vassar' ); ?></a>
+	<a class="menu-toggle" href="#menu" aria-controls="primary-menu" aria-expanded="false"><b class="menu-toggle__text"><?php esc_html_e( 'Menu', 'vassar' ); ?></b></a>
 	
 	<div id="menu" class="menu__container">
 		<a class="menu-close" href="#">Close menu</a>

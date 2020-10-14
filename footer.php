@@ -13,7 +13,8 @@
             <?php
             $child_footer_path = get_stylesheet_directory();
             $child_footer_path = $child_footer_path.'/assets/includes/footer.php';
-            include($child_footer_path);
+            if(file_exists($child_footer_path)) include($child_footer_path);
+            
             ?>
         </div>
 
@@ -21,7 +22,12 @@
 	<!--</div> .PageContentInner -->
 </div><!-- .PageContent -->
 
-<?php wp_footer(); ?>
+
+<?php 
+wp_footer();
+global $site_footer;
+if(file_exists($site_footer)) { include($site_footer); }
+?>
 
 </body>
 </html>

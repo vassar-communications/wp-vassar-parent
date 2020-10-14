@@ -1,9 +1,15 @@
 <?php
 
 $child_path = get_stylesheet_directory();
-$child_path .= "/_config.php";
 
-if (file_exists($child_path)) include($child_path);
+$child_theme_include_path = $child_path.'/assets/includes/';
+
+$site_header = $child_theme_include_path.'header_markup.php';
+$site_footer = $child_theme_include_path.'footer_markup.php';
+
+
+$child_cfg_file = $child_path."/_config.php";
+if (file_exists($child_cfg_file)) include($child_cfg_file);
 
 
 
@@ -83,9 +89,32 @@ function gw__get_site_title() {
 
 /*	SITEWIDE
 	======== */
+
+if (cfg('SITE__NO_TAGLINE_IN_TITLE')) {
+	//	Removes the tagline from the title tag on homepage
+	//  https://wordpress.stackexchange.com/questions/218980/remove-description-from-title-on-home
+	add_filter( 'pre_get_document_title', function ( $title ) {
+	        $title = get_bloginfo();
+
+	    if(is_front_page()){
+	        // $title = get_bloginfo();
+    	    return $title.' - Vassar College';
+	    }
+	    else {
+	        $the_page_title = get_the_title();
+	        return $the_page_title . ' - ' . $title . ' - Vassar College';
+	    }
+	});
+}
 	
 
+
 function socialcard($arr) {
+	
+	/*	This function is used by vassar_socialcard() in inc/template-tags.php
+	
+	*/
+	
 	foreach ($arr as $key => $value) {
 		$markup .= PHP_EOL;
 		
@@ -573,6 +602,8 @@ add_filter( 'post_gallery', 'my_gallery_shortcode', 10, 3 );
 
 add_filter( 'the_content', 'filter_the_content_in_the_main_loop' );
 
+
+
 function filter_the_content_in_the_main_loop( $content ) {
 	
 	/*	Link phone numbers */
@@ -586,6 +617,12 @@ function filter_the_content_in_the_main_loop( $content ) {
 
 	$content = preg_replace("_<a href=\"(.+?)\"((\w+=\".+?\")|\s*)*>_si", "<a href=\"$1\">", $content);
 
+    //  When WordPress corrects a straight quote, it replaces it with an HTML entity. This was causing problems on FAQs, because I was searching for strings with ’ in them, since we enter curly quotes directly; we don't use the entities. That inconsistency meant that some FAQ titles weren't being converted to h2s with their own identities. The following str_replace turns everything into the regular characters.
+    
+    $content = str_replace("&#8217;", "’", $content);
+
+
+
 	/*	FAQ formatting */
 		
 	if ( is_singular() && in_the_loop() && is_main_query() ) {
@@ -598,21 +635,19 @@ function filter_the_content_in_the_main_loop( $content ) {
 		if(strpos($page_title, "FAQ") !== false) {
 	
 			$dom_document = new DOMDocument();
-			@$dom_document->loadHTML($content);
+			@$dom_document->loadHTML('<?xml encoding="utf-8" ?>' . $content);
 			$headers = $dom_document->getElementsByTagName('h3');
 		
 			foreach ($headers as $header) {
 				$header->setAttribute("align", "left");
-				$table_of_contents[] = trim($header->nodeValue);
-			}
-			
-			foreach ($table_of_contents as &$value) {
+				$header_sanitized = trim($header->nodeValue);
+				
+				$header_sanitized = str_replace("'", "’", $header_sanitized);
 
-				//	Gets rid of any wonky characters that might choke the script
-				$value = utf8_decode($value);
-				
+                $value = $header_sanitized;
+
 				$slug = slugify($value);
-				
+
 				/*	Generate the table of contents */
 				
 			    $faq_toc .= '<li><a href="#'.$slug.'">'.$value.'</a></li>';
@@ -621,15 +656,18 @@ function filter_the_content_in_the_main_loop( $content ) {
 				*/
 		
 			    $the_tag = '<h3>'.$value.'</h3>';
+
 			    $the_tag_with_id = '<h2 id="'.$slug.'">'.$value.'</h2>';
 			    	    
-			    $content = str_ireplace($the_tag, $the_tag_with_id, $content);
+			    $content = str_replace($the_tag, $the_tag_with_id, $content);
+
 			}
 		
-		    $content = '<ul id="index" class="faq__index">'.$faq_toc.'</ul>'.$content.'<a href="#index">Top</a>';
-		 
+		    $content = '<ul id="index" class="faq__index">'.$faq_toc.'</ul>'.$content.'<a class="faq__link-to-top" href="#index">Top</a>';
+
 		}
 	}
+
     return $content;
 }
 

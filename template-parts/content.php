@@ -48,7 +48,8 @@ if(cfg('POST__THUMB_URL_INLINE')) {
 	<?php endif; ?>
 
 	<?php
-		if(!cfg('POST__HIDE_FEATURED_IMG')) vassar_post_thumbnail();
+		if(is_page() && !cfg('PAGE__HIDE_FEATURED_IMG'))  vassar_post_thumbnail();
+		else if(is_single() && !cfg('POST__HIDE_FEATURED_IMG')) vassar_post_thumbnail();
 	?>
 
 	<div class="entry__content">
