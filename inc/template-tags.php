@@ -146,22 +146,22 @@ if ( ! function_exists( 'vassar_entry_meta' ) ) :
 			}
 		}
 
-		edit_post_link(
-			sprintf(
-				wp_kses(
-					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Edit post', 'vassar' ),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
-				),
-				get_the_title()
-			),
-			'<span class="edit-link">',
-			'</span>'
-		);
+    		edit_post_link(
+    			sprintf(
+    				wp_kses(
+    					/* translators: %s: Name of current post. Only visible to     screen readers */
+    					__( 'Edit post', 'vassar' ),
+    					array(
+    						'span' => array(
+    							'class' => array(),
+    						),
+    					)
+    				),
+    				get_the_title()
+    			),
+    			'<span class="edit-link">',
+    			'</span>'
+    		);
 	}
 endif;
 
@@ -185,7 +185,7 @@ if ( ! function_exists( 'vassar_post_thumbnail' ) ) :
 
 			<a class="post__imageLink" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 				<?php
-				the_post_thumbnail( 'post-thumbnail', array(
+				the_post_thumbnail( 'news-thumbnail-size', array(
 					'alt' => the_title_attribute( array(
 						'echo' => false,
 					) ),

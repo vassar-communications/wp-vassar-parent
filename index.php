@@ -44,7 +44,12 @@ get_header();
 					
 					Note that post formats need to be specifically turned on. You won't see the formats menu in the admin area unless you're using a theme that declares support for them. Since the formats are specific to a particular site design, and the design is contained in the child theme, I've declared format support in the Summer Immersions child theme. The logic below only checks to see if there's a format associated with a post; there is nothing in the Vassar parent theme that turns on post formats.
 					
-					Should probably add this to Groundwork at some point. 
+					To turn on post formats, you'll need to put the BLOG__POST_FORMATS variable in your
+					child theme's config file.
+					
+					https://github.com/vassar-communications/wp-vassar-child/wiki/Config-variables#blog-specific
+					
+					Should probably add this to Groundwork at some point.
 					
 				*/
 				

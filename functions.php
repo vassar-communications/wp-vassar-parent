@@ -158,6 +158,23 @@ function socialcard($arr) {
 /*	FUNCTIONALITIES
 	=============== */
 
+    /*  Image sizes
+        -----------
+        These are sizes that should be available in addition to the standard
+        sizes that come with Wordpress.
+    */
+
+add_action( 'after_setup_theme', 'wpdocs_theme_setup' );
+
+function wpdocs_theme_setup() {
+    
+    //  This image size would be displayed in blog post listings; say, on the News section of an Offices site. It's referenced by the function vassar_post_thumbnail(), defined in vassar-parent/inc/template-tags.php. That function is called in vassar-parent/template-parts/content.php (content.php is the file containing the template code for blog posts).
+    
+    //  If you need a different sized thumbnail to be displayed for posts, you could override the default blog template by creating a /template-parts folder in your child theme and setting up a copy of content.php in that folder. Then defining a new image size in your child theme's functions.php file, and reference it in the new content.php override file.
+    
+   add_image_size( 'news-thumbnail-size', 220, 220, true );
+}    
+ 
 	/*	Post types */
 
 
@@ -615,7 +632,7 @@ function filter_the_content_in_the_main_loop( $content ) {
 
 	/*	Strip out target=new */
 
-	$content = preg_replace("_<a href=\"(.+?)\"((\w+=\".+?\")|\s*)*>_si", "<a href=\"$1\">", $content);
+	//	$content = preg_replace("_<a href=\"(.+?)\"((\w+=\".+?\")|\s*)*>_si", "<a href=\"$1\">", $content);
 
     //  When WordPress corrects a straight quote, it replaces it with an HTML entity. This was causing problems on FAQs, because I was searching for strings with ’ in them, since we enter curly quotes directly; we don't use the entities. That inconsistency meant that some FAQ titles weren't being converted to h2s with their own identities. The following str_replace turns everything into the regular characters.
     
