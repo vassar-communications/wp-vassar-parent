@@ -617,7 +617,9 @@ add_filter( 'post_gallery', 'my_gallery_shortcode', 10, 3 );
 	https://randomdrake.com/2010/04/27/creating-a-table-of-contents-from-html-in-php-with-domdocument-and-no-regex/
 */
 
-add_filter( 'the_content', 'filter_the_content_in_the_main_loop' );
+
+//  I added a low priority (high number) to make sure this function runs *after* the parse_blocks filter in the dropdowns plugin.
+add_filter( 'the_content', 'filter_the_content_in_the_main_loop', 100000 );
 
 
 
@@ -632,12 +634,12 @@ function filter_the_content_in_the_main_loop( $content ) {
 
 	/*	Strip out target=new */
 
-	//	$content = preg_replace("_<a href=\"(.+?)\"((\w+=\".+?\")|\s*)*>_si", "<a href=\"$1\">", $content);
+//	$content = preg_replace("_<a href=\"(.+?)\"((\w+=\".+?\")|\s*)*>_si", "<a href=\"$1\">", $content);
 
     //  When WordPress corrects a straight quote, it replaces it with an HTML entity. This was causing problems on FAQs, because I was searching for strings with ’ in them, since we enter curly quotes directly; we don't use the entities. That inconsistency meant that some FAQ titles weren't being converted to h2s with their own identities. The following str_replace turns everything into the regular characters.
     
     $content = str_replace("&#8217;", "’", $content);
-
+    $content = str_replace("'", "’", $content);
 
 
 	/*	FAQ formatting */
@@ -650,18 +652,23 @@ function filter_the_content_in_the_main_loop( $content ) {
 		/*	Only do this if the page is an FAQs page. */
 	
 		if(strpos($page_title, "FAQ") !== false) {
+		    
+//		    echo 'true';
 	
 			$dom_document = new DOMDocument();
 			@$dom_document->loadHTML('<?xml encoding="utf-8" ?>' . $content);
 			$headers = $dom_document->getElementsByTagName('h3');
 		
 			foreach ($headers as $header) {
+			    
 				$header->setAttribute("align", "left");
 				$header_sanitized = trim($header->nodeValue);
 				
 				$header_sanitized = str_replace("'", "’", $header_sanitized);
 
                 $value = $header_sanitized;
+                
+//                echo $value;
 
 				$slug = slugify($value);
 
@@ -673,10 +680,14 @@ function filter_the_content_in_the_main_loop( $content ) {
 				*/
 		
 			    $the_tag = '<h3>'.$value.'</h3>';
+			    
+//			    echo $the_tag;
 
 			    $the_tag_with_id = '<h2 id="'.$slug.'">'.$value.'</h2>';
 			    	    
 			    $content = str_replace($the_tag, $the_tag_with_id, $content);
+			    
+//			    echo '<div style="background: #eee">'.$content.'</div>';
 
 			}
 		

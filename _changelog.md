@@ -1,3 +1,32 @@
+Nov 30, 2020 - v-1.0.2
+======================
+
+* functions.php
+	** Added a priority of 100000 to the the_content filter. Unintuitively, this means a *lower* priority; the idea is to make sure the_content runs last.
+	
+	This is because I have a plugin, Dropdownizer, that parses blocks. Dropdownizer relies on WordPress's parse_blocks() function to pick out the individual Gutenberg blocks on a page; Dropdownizer then identifies any group with a class of "dropdown" and modifies the content. 
+	
+	However, Dropdownizer *has* to have the raw post content with all the block designations still in place. WP grabs the post content and then renders all the blocks, removing those block designations (the special WP HTML comments) which means that by the time you call the the_content variable that you'd usually use when filtering WordPress content, there aren't any block designations left for parse_blocks() to parse. parse_blocks() can't find any blocks.
+	
+	So Dropdownizer can't accept the_content. It has to pull unmodified post content straight from the post object. It then reads the blocks from it, and modifies those as needed.
+	
+	However, what happened was the following:
+
+	- the filters in vassar_parent's functions.php were applied first: post content was scanned, phone numbers were linked, FAQs got formatted, etc.
+	- but then the Dropdownizer plugin ran. It wasn't accepting the modified content from the parent theme's functions.php, for the reasons I mentioned above; it was grabbing the unmodified post content straight from the post, doing its thing, and then returning the content. So it was wiping out - well, overriding - the modified content from the theme's filter.
+
+	In order to fix that, I had to make sure the plugin filter ran *first*. That way, the plugin gets the raw post content, still with all the block designations. It runs through that, modifies the blocks as needed, and then returns the modified content, at which point the functions.php file in vassar-parent takes over and does its thing.
+	
+	** I noticed that, for some reason, the FAQ system started missing straight quotes. Maybe that's because it's accepting modified content from the plugin. In any case, I had to add another search-and-replace rule to functions: $content = str_replace("'", "’", $content);
+
+
+
+Nov 10, 2020 - v-1.0.1
+======================
+
+* header.php: Fixed bug where I was using the wrong function to pull in the featured image for the page banner. Wasn't throwing an error, but the image wasn't showing up.
+
+
 Oct 14, 2020 - v-1.0.0
 ======================
 

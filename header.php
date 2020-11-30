@@ -77,11 +77,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	        --site-header-image: url(<?php header_image(); ?>);
 	    <?php endif; ?>
 	    <?php if ( has_post_thumbnail( $post->ID )) : ?>
-	        --page-header-image: url(<?php header_image( $post->ID ); ?>);
+	        --page-header-image: url(<?php echo wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>);
 	    <?php endif; ?>
 	}
 	</style>
-
 
 	
 </head>
@@ -130,6 +129,10 @@ include(get_template_directory()."/_config.php");
 
 
 		</div><!-- .site-branding -->
+        <?php if ( get_post(get_post_thumbnail_id())->post_excerpt !== '') {  // has_post_thumbnail( $post->ID )
+	        echo '<div class="u-Masthead__caption"><b class="hide-accessible">Banner image: </b> ' . get_post(get_post_thumbnail_id())->post_excerpt . '</div>'; 
+	        } 
+	       ?>
 	</header><!-- #masthead -->
 
 	<div id="content" class="u-lMain">
