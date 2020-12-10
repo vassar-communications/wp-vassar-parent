@@ -618,8 +618,7 @@ add_filter( 'post_gallery', 'my_gallery_shortcode', 10, 3 );
 */
 
 
-//  I added a low priority (high number) to make sure this function runs *after* the parse_blocks filter in the dropdowns plugin.
-add_filter( 'the_content', 'filter_the_content_in_the_main_loop', 100000 );
+add_filter( 'the_content', 'filter_the_content_in_the_main_loop' );
 
 
 

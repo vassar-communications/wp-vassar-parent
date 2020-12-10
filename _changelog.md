@@ -1,3 +1,10 @@
+Nov 30, 2020 - v-1.0.3
+======================
+
+* functions.php
+	** Removed aforementioned priority of 100000 on the the_content filter. I had a priority set on the Dropdownizer filter; removed that, and the vassar-parent priority, and everything runs in its proper order.
+
+
 Nov 30, 2020 - v-1.0.2
 ======================
 
