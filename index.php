@@ -19,20 +19,19 @@ get_header();
 	<div id="primary" class="u-lContent">
 		<main id="main" class="site-main">
 
-		<?php
-		if ( have_posts() ) :
-				?>
-				<header>
-					<?php if (is_archive()) {
-						the_archive_title( '<h1 class="page__title u-pageTitle">', '</h1>' );
-						the_archive_description( '<div class="archive-description">', '</div>' );
-					}
-					if ( is_home() && ! is_front_page() ) : 
-						echo '<h1 class="page__title u-pageTitle">';
-						single_post_title();
-						echo '</h1>';
-					endif; ?>
-				</header>
+		<?php if ( have_posts() ) : ?>
+			<?php do_action('vassarparent__before_header'); ?>
+			<header>
+				<?php if (is_archive()) {
+					the_archive_title( '<h1 class="page__title u-pageTitle">', '</h1>' );
+					the_archive_description( '<div class="archive-description">', '</div>' );
+				}
+				if ( is_home() && ! is_front_page() ) : 
+					echo '<h1 class="page__title u-pageTitle">';
+					single_post_title();
+					echo '</h1>';
+				endif; ?>
+			</header>
 				<?php
 
 			/* Start the Loop */

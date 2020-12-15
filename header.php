@@ -87,6 +87,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body>
 
+	<?php wp_body_open(); ?>
+
 <?php 
     global $site_header;
     

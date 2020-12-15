@@ -1,4 +1,16 @@
 <?php
+	
+	
+/*	
+	NOTE
+	====
+	
+	It may be tempting to replace this entire file with an include that just brings
+	in index.php. Do not do that; archive.php has specific functionalities - like the 
+	archive description - that other sites use.	I might do that eventually.
+
+*/
+	
 if(cfg('SITE__REDIRECT_ARCHIVES_TO_HOME')) {
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: ".get_bloginfo('url'));
@@ -18,14 +30,16 @@ if(cfg('SITE__REDIRECT_ARCHIVES_TO_HOME')) {
 get_header();
 ?>
 
-	<div id="primary" class="content-area">
+	<div id="primary" class="u-lContent">
 		<main id="main" class="site-main">
 
 		<?php if ( have_posts() ) : ?>
 
+			<?php do_action('vassarparent__before_header'); ?>
+
 			<header class="page-header">
 				<?php
-				the_archive_title( '<h1 class="page-title">', '</h1>' );
+				the_archive_title( '<h1 class="page__title u-pageTitle">', '</h1>' );
 				the_archive_description( '<div class="archive-description">', '</div>' );
 				?>
 			</header><!-- .page-header -->
@@ -58,4 +72,11 @@ get_header();
 
 <?php
 get_sidebar();
+?>
+
+</div>
+
+<?php include(get_template_directory() . '/inc/navigation.php'); ?>
+
+<?php
 get_footer();

@@ -1,3 +1,24 @@
+Dec 15, 2020 - v-1.1
+====================
+
+* archive.php
+** Changed some classnames to match the other templates
+** Added the nav.
+
+archive.php is one of these pages where I'm wondering if the entire thing can be replaced with simply including index.php. archive.php does have code for redirecting archive pages to the main page, so that should be kept, but currently we're dealing with two different templates that I have to make sure are the same.
+
+
+* header.php
+** Added wp_body_open() hook
+
+* single.php
+** Added vassarparent__before_header hook
+
+* index.php
+** Added vassarparent__before_header hook
+
+
+
 Nov 30, 2020 - v-1.0.3
 ======================
 

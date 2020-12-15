@@ -17,6 +17,8 @@ get_header();
 		while ( have_posts() ) :
 			the_post();
 
+			do_action('vassarparent__before_header');
+			
 			get_template_part( 'template-parts/content', get_post_type() );
 
 			if(cfg('BLOG__PREVNEXT_REVERSE_ORDER')) $prevnext_title_prev = "Next";
