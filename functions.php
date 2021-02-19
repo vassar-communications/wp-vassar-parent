@@ -626,7 +626,7 @@ function filter_the_content_in_the_main_loop( $content ) {
 	
 	/*	Link phone numbers */
 	
-	$pattern = '/\(?(\d{3})\)?[-. ](\d{3})[-.](\d{4})/';
+	$pattern = '/\(?(\d{3})\)?[-. ](\d{3})[-.\x{2013}\x{2014}](\d{4})/u';
 	$replacement = '<a href="tel:+1$1$2$3">($1) $2-$3</a>';
 	$content = preg_replace($pattern, $replacement, $content);
 	

@@ -1,3 +1,10 @@
+Feb 19, 2021 - v-1.2
+====================
+
+* functions.php
+** In filter_the_content_in_the_main_loop(), adjusted the regex for matching phone numbers, so numbers will be linked even if an en or em dash is used instead of a hyphen. Beth noticed that one of the offices had a number with an en dash, so it wasn't being linked. (All matched dashes will be replaced with hyphens.)
+
+
 Dec 15, 2020 - v-1.1
 ====================
 
