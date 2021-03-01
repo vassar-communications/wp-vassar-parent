@@ -108,7 +108,7 @@ if ( ! function_exists( 'vassar_entry_meta' ) ) :
 		if ( 'post' === get_post_type() ) {
 			if(cfg('POST__SHOW_CATEGORIES')) {
 				/* translators: used between list items, there is a space after the comma */
-				$categories_list = get_the_category_list( esc_html__( ', ', 'vassar' ) );
+				$categories_list = get_the_category_list( esc_html__( cfg('POST__CAT_DELIMITER', true, ','), 'vassar' ) );
 				if ( $categories_list ) {
 					/* translators: 1: list of categories. */
 					printf( '<div class="post__metaItem post__categories">' . '<b class="label label--cats">'.cfg('POST__CATEGORIES__LABEL', true).'</b> %1$s' . '</div>', $categories_list ); // WPCS: XSS OK.
@@ -117,7 +117,7 @@ if ( ! function_exists( 'vassar_entry_meta' ) ) :
 
 			if(cfg('POST__SHOW_TAGS')) {
 				/* translators: used between list items, there is a space after the comma */
-				$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'vassar' ) );
+				$tags_list = get_the_tag_list( '', esc_html_x( cfg('POST__TAG_DELIMITER', true, ','), 'list item separator', 'vassar' ) );
 				if ( $tags_list ) {
 					/* translators: 1: list of tags. */
 					printf( '<div class="post__metaItem post__tags">' . '<b class="label label--tags">'.cfg('POST__TAGS__LABEL', true).'</b> %1$s' . '</div>', $tags_list ); // WPCS: XSS OK.

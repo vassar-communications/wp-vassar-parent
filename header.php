@@ -69,7 +69,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	<?php vassar_socialcard(); ?>
 
 	<?php wp_head(); ?>
-
+	
+	<?php if(cfg('SITE__TYPEKIT_ID')) { ?>
+		<script src="https://use.typekit.net/<?php echo cfg('SITE__TYPEKIT_ID', true); ?>.js"></script>
+		<script>try{Typekit.load({ async: true });}catch(e){}</script>
+	<?php } ?>
+	
 	<style type="text/css">
 	:root {
 	    <?php if ( get_header_image() ) : ?>
@@ -118,7 +123,7 @@ include(get_template_directory()."/_config.php");
 
 			echo site_title();
 
-			if (cfg('SITE__HIDE_TAGLINE') !== false) {
+			if (cfg('SITE__HIDE_TAGLINE') !== true) {
 				$vassar_description = get_bloginfo( 'description', 'display' );
 				if ( $vassar_description || is_customize_preview() ) :
 					?>
@@ -131,10 +136,11 @@ include(get_template_directory()."/_config.php");
 
 
 		</div><!-- .site-branding -->
-        <?php if ( get_post(get_post_thumbnail_id())->post_excerpt !== '') {  // has_post_thumbnail( $post->ID )
-	        echo '<div class="u-Masthead__caption"><b class="hide-accessible">Banner image: </b> ' . get_post(get_post_thumbnail_id())->post_excerpt . '</div>'; 
-	        } 
-	       ?>
+        <?php
+	        if ( get_the_post_thumbnail_caption() !== '' ) {
+		        echo '<div class="u-Masthead__caption"><b class="hide-accessible">Banner image: </b> ' . get_the_post_thumbnail_caption() . '</div>';
+	        }
+	    ?>
 	</header><!-- #masthead -->
 
 	<div id="content" class="u-lMain">

@@ -57,7 +57,7 @@ if(cfg('POST__THUMB_URL_INLINE')) {
 			
 		$show_summary = cfg('POST__SHOW_SUMMARY');
 
-		if ((is_front_page() || is_archive() || is_home()) && $show_summary )  {
+		if ((is_front_page()) || (is_archive()) || (is_search()) || (is_home()) && $show_summary )  {
 
 			the_excerpt();
 

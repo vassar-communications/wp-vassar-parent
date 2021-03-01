@@ -1,3 +1,15 @@
+Feb 22, 2021 - v-1.3.1
+======================
+
+* header.php
+** Bug: cfg('SITE__HIDE_TAGLINE') was checking to see if it was *not* false; if it wasn't false, it displayed the tagline. Changed condition check to (cfg('SITE__HIDE_TAGLINE') !== true).
+** Added config variable and code for Typekit markup
+
+* inc/template-tags.php
+** In vassar_entry_meta(), replaced the hardcoded comma delimiters for lists of tags and categories with two cfg variables, POST__CAT_DELIMITER and POST__TAG_DELIMITER. If unspecified, a comma is used.
+
+ 
+
 Feb 19, 2021 - v-1.2
 ====================
 
