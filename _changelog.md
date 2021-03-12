@@ -1,3 +1,16 @@
+Mar 11, 2021 - v-1.4
+====================
+
+* functions.php
+** Added a function to get the root parent of a page, so I can add its slug as a class in the HTML tag. This means that if you wanted to apply specific styling to any section's child page, no matter how far down it is, you can do that.
+
+* header.php
+** Via the aforementioned get_root_parent() function, added the root parent's slug to the HTML tag.
+
+* search.php
+** I removed the get_post_type() parameter from get_template_part() because it was causing problems with search results for pages. The entire page was appearing in the results, as opposed to results for posts, which displayed excerpts, and the page titles were h1s, not h2s, which breaks the outline hierarchy. All search result items should look the same. I might add back get_post_type() as a cfg option in the future if I see a need for it.
+
+
 Feb 22, 2021 - v-1.3.1
 ======================
 

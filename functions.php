@@ -107,6 +107,18 @@ if (cfg('SITE__NO_TAGLINE_IN_TITLE')) {
 	});
 }
 	
+function get_root_parent($post) {
+	if ($post->post_parent)	{
+		$ancestors=get_post_ancestors($post->ID);
+		$root=count($ancestors)-1;
+		$this_post_parent_id = $ancestors[$root];
+		$this_post_parent = get_post($this_post_parent_id);
+	} else {
+		$this_post_parent = get_post($post->ID);
+	}
+	return $this_post_parent;
+}
+
 
 
 function socialcard($arr) {

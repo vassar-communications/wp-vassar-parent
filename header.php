@@ -35,6 +35,15 @@ else $additional_classes .= ' has-sidebar';
 
 if(!is_singular() && cfg('BLOG__USE_MINIPOST')) $additional_classes .= ' minimal-post-on-frontpage';
 
+if(has_post_thumbnail()) $additional_classes .= ' has-post-thumbnail';
+
+//	Get the root parent for this page
+
+$this_post_parent = get_root_parent($post);
+$parent_slug = $this_post_parent->post_name;
+
+$additional_classes .= ' rootParent-'.$parent_slug;
+
 ?>
 
 <html <?php language_attributes(); ?> <?php body_class($additional_classes); ?>>

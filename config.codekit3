@@ -396,6 +396,14 @@
 		"oT": 1,
 		"q": 100
 		},
+	"/search.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/search.php",
+		"oF": 0
+		},
 	"/sidebar.php": {
 		"cB": 0,
 		"ft": 8192,

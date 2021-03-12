@@ -48,7 +48,19 @@ get_header();
 				 * If you want to override this in a child theme, then include a file
 				 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
 				 */
-				get_template_part( 'template-parts/content', get_post_type() );
+
+				 /*	including get_post_type() in get_template_part() meant that while
+					posts displayed properly in search results - showing the brief summary, not
+					the entire post - pages showed up in their entirety, and the page titles were h1s,
+					not h2s. I want all search result items to look the same.
+					 
+					Might add back get_post_type() as a cfg option in the future if I see a need for it.
+				 */
+
+//				get_template_part( 'template-parts/content', get_post_type() );
+
+
+				get_template_part( 'template-parts/content' );
 
 			endwhile;
 
