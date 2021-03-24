@@ -334,6 +334,18 @@ function vassar_widgets_init() {
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
 	) );
+
+	if( cfg('SITE__FOOTER_HAS_WIDGET_AREA', true) ) {
+		register_sidebar( array(
+			'name'          => esc_html__( 'Footer', 'vassar' ),
+			'id'            => 'footer-1',
+			'description'   => esc_html__( 'Add widgets here.', 'vassar' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		) );
+	}
 }
 add_action( 'widgets_init', 'vassar_widgets_init' );
 
@@ -660,9 +672,9 @@ function filter_the_content_in_the_main_loop( $content ) {
 		$post_id = $post->ID;
 		$page_title = get_the_title($post_id);
 	
-		/*	Only do this if the page is an FAQs page. */
+		/*	Only do this if the page is an FAQs page and isn't already designated as having a table of contents. This is to avoid conflicts between the following code and the PageTOC plugin. */
 	
-		if(strpos($page_title, "FAQ") !== false) {
+		if( ( strpos($page_title, "FAQ") !== false) && ( !get_post_meta( $post_id, 'has-index', true ) ) ) {
 		    
 //		    echo 'true';
 	

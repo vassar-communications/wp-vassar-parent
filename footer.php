@@ -15,6 +15,13 @@
             $child_footer_path = $child_footer_path.'/assets/includes/footer.php';
             if(file_exists($child_footer_path)) include($child_footer_path);
             
+            if( cfg('SITE__FOOTER_HAS_WIDGET_AREA', true) ) {
+				if( is_active_sidebar( 'footer-1' ) ) : 
+					echo '<div class="">';
+					dynamic_sidebar( 'footer-1' );
+				endif;
+            }
+            
             ?>
         </div>
 
