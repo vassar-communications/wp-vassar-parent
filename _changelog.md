@@ -2,14 +2,14 @@ Mar 11, 2021 - v-1.4
 ====================
 
 * functions.php
- * Added a function to get the root parent of a page, so I can add its slug as a class in the HTML tag. This means that if you wanted to apply specific styling to any section's child page, no matter how far down it is, you can do that.
- * (Mar 24) In the FAQ formatting section, I now have it check to see not only if a page has FAQ in its title, but also if the `has-index` meta field has been applied to the page. There are two ways to generate TOCs now; the original way, which auto-generated them for FAQs pages, and a more general-purpose way implemented in the PageTOC plugin I wrote later. PageTOC allows one to add a TOC to any page via the `has-index` meta field, regardless of whether it's an FAQ page or not. The issue is that if I removed the first way, there are a lot of FAQ pages without `has-index` that would lose their TOCs; we'd have to go back through and add them back. So I left both methods in place. However, Beth had a page that had both the "FAQ" in its title and the `has-index` meta field, and the scripts were conflicting, generating two different TOCs. So I now have the first method check to see if a page already has a TOC specified before generating one.
+	* Added a function to get the root parent of a page, so I can add its slug as a class in the HTML tag. This means that if you wanted to apply specific styling to any section's child page, no matter how far down it is, you can do that.
+	* (Mar 24) In the FAQ formatting section, I now have it check to see not only if a page has FAQ in its title, but also if the `has-index` meta field has been applied to the page. There are two ways to generate TOCs now; the original way, which auto-generated them for FAQs pages, and a more general-purpose way implemented in the PageTOC plugin I wrote later. PageTOC allows one to add a TOC to any page via the `has-index` meta field, regardless of whether it's an FAQ page or not. The issue is that if I removed the first way, there are a lot of FAQ pages without `has-index` that would lose their TOCs; we'd have to go back through and add them back. So I left both methods in place. However, Beth had a page that had both the "FAQ" in its title and the `has-index` meta field, and the scripts were conflicting, generating two different TOCs. So I now have the first method check to see if a page already has a TOC specified before generating one.
 
 * header.php
- * Via the aforementioned get_root_parent() function, added the root parent's slug to the HTML tag.
+	* Via the aforementioned get_root_parent() function, added the root parent's slug to the HTML tag.
 
 * search.php
- * I removed the get_post_type() parameter from get_template_part() because it was causing problems with search results for pages. The entire page was appearing in the results, as opposed to results for posts, which displayed excerpts, and the page titles were h1s, not h2s, which breaks the outline hierarchy. All search result items should look the same. I might add back get_post_type() as a cfg option in the future if I see a need for it.
+	* I removed the get_post_type() parameter from get_template_part() because it was causing problems with search results for pages. The entire page was appearing in the results, as opposed to results for posts, which displayed excerpts, and the page titles were h1s, not h2s, which breaks the outline hierarchy. All search result items should look the same. I might add back get_post_type() as a cfg option in the future if I see a need for it.
 
 
 Feb 22, 2021 - v-1.3.1
