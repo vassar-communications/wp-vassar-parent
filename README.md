@@ -10,7 +10,7 @@ This is a parent theme for Vassar WordPress sites.
 
 * Offices
 * Summer Immersion (outdated, forked version)
-* Powerhouse
-* Front Lines
-* Pharos
-* Vassar Critical Journal
+* Powerhouse (never launched)
+* [Front Lines](https://frontlines.vassar.edu/)
+* [Pharos](https://pharos.vassarspaces.net/)
+* [Vassar Critical Journal](https://vassarcriticaljournal.vassarspaces.net/)
