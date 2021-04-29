@@ -27,6 +27,7 @@ get_header();
 			if(cfg('BLOG__PREVNEXT_REVERSE_ORDER')) $prevnext_title_next = "Previous";
 			else $prevnext_title_next = "Next";
 
+			do_action('vassarparent__after_entryContent');
 
             $args = array(
             'prev_text' => '<span class="prevnext__title">'.$prevnext_title_prev.'</span> <span class="prevnext__name">%title</span>',

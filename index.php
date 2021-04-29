@@ -87,6 +87,9 @@ get_header();
 			get_template_part( 'template-parts/content', 'none' );
 
 		endif;
+
+    	do_action('vassarparent__after_entryContent');
+    	
 		?>
 
 		</main><!-- #main -->

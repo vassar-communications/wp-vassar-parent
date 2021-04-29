@@ -106,7 +106,7 @@ if (cfg('SITE__NO_TAGLINE_IN_TITLE')) {
 	    }
 	});
 }
-	
+
 function get_root_parent($post) {
 	if ($post->post_parent)	{
 		$ancestors=get_post_ancestors($post->ID);

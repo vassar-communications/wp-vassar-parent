@@ -94,12 +94,55 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	        --page-header-image: url(<?php echo wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>);
 	    <?php endif; ?>
 	}
+
+	.ac-hidden {
+		/*	This needs to be available everywhere - can't rely
+			on having this styling in child themes. */	
+		border: 0 !important;
+		clip: rect(1px, 1px, 1px, 1px);
+		height: 1px !important;
+		padding: 0 !important;
+		overflow: hidden;
+		position: absolute !important;
+		width: 1px !important;
+		z-index: 110;
+	}
+	.ac-revealOnTab:active,
+	.ac-revealOnTab:focus {
+	    color: #000;
+	    clip: auto;
+	    height: auto !important;
+	    overflow: visible;
+	    position: static !important;
+	    width: auto !important;
+	    position: absolute !important;
+	    line-height: 1;
+	    left: 0;
+	    top: 0;
+	    width: 50% !important;
+	    
+	    padding: 0.4em !important;
+	    background: #fff !important;
+	    display: inline-block !important;
+	    box-shadow: 0 0.4em 0.4em rgba(0,0,0,0.4);
+	}
+
 	</style>
 
 	
 </head>
 
 <body>
+
+	<a class="ac-hidden ac-revealOnTab" href="#content">Skip to content</a>
+	<a class="ac-hidden ac-revealOnTab" href="#site-navigation">Skip to navigation</a>
+
+	<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCS4M7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+	
 
 	<?php wp_body_open(); ?>
 
@@ -110,13 +153,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         include($site_header);
     }
 ?>
-	
-	<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCS4M7"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
-	
+<?php
+	/*
+		Apr 15 - I moved the Google Tag Manager code from here to right
+		after the opening body tag, since I realized it should come immediately
+		after the tag. This shouldn't cause problems, but I'm making a
+		note of it here.	
+	*/
+?>
+
+
+
 <?php 
 //  The _config file for this parent theme, not the child theme. Normally, all config variables should go in the child's _config.php file, since they determine the behavior of the site and should be considered part of the design. I'm including a _config for the parent as well, just in case it's needed.
 include(get_template_directory()."/_config.php"); 
