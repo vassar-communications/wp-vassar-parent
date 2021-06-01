@@ -77,16 +77,32 @@ if(cfg('POST__THUMB_URL_INLINE')) {
 			
 		$show_summary = cfg('POST__SHOW_SUMMARY');
 
-		if ((is_front_page()) || (is_archive()) || (is_search()) || (is_home()) && $show_summary )  {
+		$dont_show_content_in_list = get_post_meta( get_the_ID(), 'no-summary', true );
+		
+		    /*  If this is a listing of posts, and not a single post */
+			if ( !is_singular() )  {
+				
+				/*	And if (1) the site is configured to show just a summary,
+				    not the full content and (2) the post doesn't have a custom field of 'no-summary' set to true
+				*/
+				if ( $show_summary && !$dont_show_content_in_list ) {	
+				
+					the_excerpt();
+				
+					if(cfg('POST__SHOW_READMORE_AFTER_EXCERPT')) {
+					    $readmore_text = cfg('POST__READMORE_AFTER_EXCERPT_TEXT', true, 'Read more');
+				//			    $readmore_link = get_permalink();
+						echo '<div class="readmore-link__container"><a class="readmore-link" href="'.$linkTo.'">'.$readmore_text.'</a></div>';
+					}
+				}
+				/*	Otherwise, if neither $show_summary nor $dont_show_content_in_list is true,	show the full content */
+				
+				else if ( !$dont_show_content_in_list ) {
+					the_content( sprintf(wp_kses(__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'vassar' ),array('span' => array('class' => array(),),)),get_the_title()) );
+				}
+			
+			} else {
 
-			the_excerpt();
-
-			if(cfg('POST__SHOW_READMORE_AFTER_EXCERPT')) {
-			    $readmore_text = cfg('POST__READMORE_AFTER_EXCERPT_TEXT', true, 'Read more');
-//			    $readmore_link = get_permalink();
-				echo '<div class="readmore-link__container"><a class="readmore-link" href="'.$linkTo.'">'.$readmore_text.'</a></div>';
-			}
-		} else {
 			the_content( sprintf(
 				wp_kses(
 					/* translators: %s: Name of current post. Only visible to screen readers */

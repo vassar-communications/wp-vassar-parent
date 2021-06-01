@@ -1,3 +1,20 @@
+
+June 1, 2021 - v-1.6.1
+======================
+
+## functions.php
+* Added small font size to editor font-size list
+* Added a hack to undo international phone numbers getting auto-linked twice
+
+## header.php
+* Added a check for a `vpress__no-sidebar` custom field to make sure the `no-subnav` class can be manually applied
+* Added `$post->ID` to `has_post_thumbnail()`; I think the `has-post-thumbnail` class may not have been applied otherwise.
+
+## template-parts/content.php
+* Added support for a `no-summary` field applied to blogposts, where a user can make sure a post doesn't display a summary when it appears in a listing.
+
+
+
 Apr 15, 2021 - v-1.5.1
 ======================
 

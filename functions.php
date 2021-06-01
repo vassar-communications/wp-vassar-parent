@@ -433,6 +433,12 @@ add_theme_support( 'editor-font-sizes', array(
 			'size' => 20,
 			'slug' => 'intro'
 		),
+		array(
+			'name' => __( 'Small', 'gutenberg-test' ),
+			'shortName' => __( 'N', 'gutenberg-test' ),
+			'size' => 12,
+			'slug' => 'small'
+		),
 	) );
 add_theme_support('disable-custom-font-sizes');
 
@@ -653,6 +659,21 @@ function filter_the_content_in_the_main_loop( $content ) {
 	$pattern = '/\(?(\d{3})\)?[-. ](\d{3})[-.\x{2013}\x{2014}](\d{4})/u';
 	$replacement = '<a href="tel:+1$1$2$3">($1) $2-$3</a>';
 	$content = preg_replace($pattern, $replacement, $content);
+
+
+	/*	Had a situation come up on http://offices.vassar.edu/international-programs/health-safety/ where
+		some numbers with the international code were added and manually linked. At that point, the
+		auto-linker then relinked the standard phone number inside the already-linked code.
+		
+		What follows is a hack: it looks for manually added, double-linked numbers and removes
+		the autolink. What the code should really be doing is auto-linking all numbers, including 
+		ones that include the 0XX country code; looking into this.
+	*/
+
+	$patternWithIntlNum = '/\<a href="tel:\+0111(\d{3})\)?(\d{3})(\d{4})">011-1-<a href="tel:\+1(\d{3})\)?(\d{3})(\d{4})">\((\d{3})\) (\d{3})\-(\d{4})<\/a><\/a>/u';
+	$replacementWithIntlNum = '<a href="tel:+0111$1$2$3">011-1-($1) $2-$3</a>';
+
+	$content = preg_replace($patternWithIntlNum, $replacementWithIntlNum, $content);
 	
 
 	/*	Strip out target=new */

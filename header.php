@@ -19,8 +19,14 @@
 $additional_classes = 'no-js ';
 
 //	First of all: to subnav or not to subnav?
+//	Any page with subpages will automatically have a `has-subnav` class
+//	but maybe we don't want that. So let's see if the user added a 
+//	no-subnav custom field.
+$no_subnav = get_post_meta($post->ID, 'vpress__no-subnav', true);
 
-if(has_subpage()) $additional_classes .= ' has-subnav';
+//	If the page has subnav, and we didn't tell it *not* to have subnav
+//	well then, I guess it's getting subnav
+if( has_subpage() && !$no_subnav ) $additional_classes .= ' has-subnav';
 else $additional_classes .= ' no-subnav';
 
 //	Now then; do we have a sidebar or not?
@@ -35,7 +41,7 @@ else $additional_classes .= ' has-sidebar';
 
 if(!is_singular() && cfg('BLOG__USE_MINIPOST')) $additional_classes .= ' minimal-post-on-frontpage';
 
-if(has_post_thumbnail()) $additional_classes .= ' has-post-thumbnail';
+if(has_post_thumbnail( $post->ID )) $additional_classes .= ' has-post-thumbnail';
 
 //	Get the root parent for this page
 
