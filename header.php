@@ -50,6 +50,10 @@ $parent_slug = $this_post_parent->post_name;
 
 $additional_classes .= ' rootParent-'.$parent_slug;
 
+// Finally, are there any additional customn classes we want to add?
+
+$additional_classes .= ' ' . get_post_meta($post->ID, 'vpress__custom-classes', true);
+
 ?>
 
 <html <?php language_attributes(); ?> <?php body_class($additional_classes); ?>>
