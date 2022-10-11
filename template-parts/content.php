@@ -13,8 +13,8 @@
 
 if(cfg('POST__THUMB_URL_INLINE')) {
 	$article_data_attr = 'data-image-url="'.get_the_post_thumbnail_url().'"';
-}	
-	
+}
+
 ?>
 
 
@@ -35,10 +35,14 @@ if(cfg('POST__THUMB_URL_INLINE')) {
 					the blog for the site's news system, and in our current system, some items
 					link to other sites.
 			*/
-			
+
 			//  Is there an offsite link specified?
 			$offsite_link = get_post_meta( get_the_ID(), 'offsite-link', true );
-			
+
+//			echo get_the_ID();
+
+//			echo $offsite_link;
+
 			//  Nope. Link to the blog post as usual.
 			if ( $offsite_link == '' ) {
 				$linkTo = get_permalink();
@@ -57,7 +61,7 @@ if(cfg('POST__THUMB_URL_INLINE')) {
 	<?php if ( 'post' === get_post_type() ) : ?>
 		<div class="post__meta">
 			<?php
-				
+
 				vassar_posted_on();
 				if(cfg('POST__SHOW_AUTHOR')) vassar_posted_by();
 				vassar_entry_meta();
@@ -67,28 +71,28 @@ if(cfg('POST__THUMB_URL_INLINE')) {
 
 	<?php
 		if(is_page() && !cfg('PAGE__HIDE_FEATURED_IMG'))
-			vassar_post_thumbnail();
+			vassar_post_thumbnail();
 		else if(is_single() && !cfg('POST__HIDE_FEATURED_IMG'))
-			vassar_post_thumbnail();
+			vassar_post_thumbnail();
 	?>
-	
+
 	<div class="entry__content">
 		<?php
-			
+
 		$show_summary = cfg('POST__SHOW_SUMMARY');
 
 		$dont_show_content_in_list = get_post_meta( get_the_ID(), 'no-summary', true );
-		
+
 		    /*  If this is a listing of posts, and not a single post */
 			if ( !is_singular() )  {
-				
+
 				/*	And if (1) the site is configured to show just a summary,
 				    not the full content and (2) the post doesn't have a custom field of 'no-summary' set to true
 				*/
-				if ( $show_summary && !$dont_show_content_in_list ) {	
-				
+				if ( $show_summary && !$dont_show_content_in_list ) {
+
 					the_excerpt();
-				
+
 					if(cfg('POST__SHOW_READMORE_AFTER_EXCERPT')) {
 					    $readmore_text = cfg('POST__READMORE_AFTER_EXCERPT_TEXT', true, 'Read more');
 				//			    $readmore_link = get_permalink();
@@ -96,11 +100,11 @@ if(cfg('POST__THUMB_URL_INLINE')) {
 					}
 				}
 				/*	Otherwise, if neither $show_summary nor $dont_show_content_in_list is true,	show the full content */
-				
+
 				else if ( !$dont_show_content_in_list ) {
 					the_content( sprintf(wp_kses(__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'vassar' ),array('span' => array('class' => array(),),)),get_the_title()) );
 				}
-			
+
 			} else {
 
 			the_content( sprintf(
