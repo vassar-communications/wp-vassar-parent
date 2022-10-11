@@ -1,3 +1,9 @@
+Oct 11, 2022 - v-1.6.3
+======================
+
+## template-parts/content.php
+* Removed some weird gremlin characters that suddenly started breaking the site (back-end server config change, maybe?) 
+
 June 1, 2021 - v-1.6.2
 ======================
 
