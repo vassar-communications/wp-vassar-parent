@@ -1,3 +1,10 @@
+Oct 11, 2022 - v-1.6.4
+======================
+
+## sidebar.php
+* Commented out the aside widget area
+
+
 Oct 11, 2022 - v-1.6.3
 ======================
 
