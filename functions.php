@@ -14,19 +14,19 @@ if (file_exists($child_cfg_file)) include($child_cfg_file);
 
 
 /*
-	
+
 This whole thing needs to be organized with an index at the front.
 
 	* Basic Utilities
-	
+
 	* Sitewide
-	
+
 	* Functionalities
 		* Post types
 
 	* WordPress overrides
 		* Excerpt length
-	
+
 	* Admin
 
 */
@@ -38,26 +38,26 @@ This whole thing needs to be organized with an index at the front.
 	------
 
 	These handle settings the theme designer has specified in the _config.php file.
-	
+
 	Note that _config.php sits in the *child* theme, not the parent theme. That's because the intention is for all site-specific stuff - design, local functionality, etc - to be contained in the child theme. The parent theme should contain no functionality specific to any particular site. */
 
 
 /* Use cfg() to check/retrieve config settings. If $get_value is false, cfg() only returns "true" if a setting exists. If $get_value is true, cfg() returns the actual value of that setting. If a setting doesn't exist, cfg() returns false.
-	
+
 	$constant - string. The name of the setting you're checking.
 	$get_value - boolean, optional.
 
 */
 
 function cfg($setting, $get_value = false, $default = '') {
-	
+
 	//	First: Is the setting even defined - that is, present in the config file?
 	if (defined($setting)) {
-		
+
 		//	Okay, it's in settings, but is it true?
 		if(constant($setting)) {
 
-			//	And finally, do we need to know what its value actually is - say, if it's a string?			
+			//	And finally, do we need to know what its value actually is - say, if it's a string?
 			if($get_value) {
 				return constant($setting);
 			}
@@ -80,9 +80,9 @@ function cfg($setting, $get_value = false, $default = '') {
 
 function gw__get_site_title() {
 	if (cfg('SITE__CUSTOM_TITLE')) {
-		return SITE__CUSTOM_TITLE; 
+		return SITE__CUSTOM_TITLE;
 	}
-	else return get_bloginfo( 'name' ); 
+	else return get_bloginfo( 'name' );
 }
 
 
@@ -90,9 +90,17 @@ function gw__get_site_title() {
 /*	SITEWIDE
 	======== */
 
+
 if (cfg('SITE__NO_TAGLINE_IN_TITLE')) {
 	//	Removes the tagline from the title tag on homepage
 	//  https://wordpress.stackexchange.com/questions/218980/remove-description-from-title-on-home
+	//
+	//  NOTE: when SITE__NO_TAGLINE_IN_TITLE is true, I noticed that this
+	//  screwed up titles on archive pages; the page titles were the title
+	//  of the first post on the page, not the title of the archive. This
+	//  function is unneeded, since taglines can and should be set to empty,
+	//  so it should be removed at some point. 
+	//
 	add_filter( 'pre_get_document_title', function ( $title ) {
 	        $title = get_bloginfo();
 
@@ -106,6 +114,8 @@ if (cfg('SITE__NO_TAGLINE_IN_TITLE')) {
 	    }
 	});
 }
+
+
 
 function get_root_parent($post) {
 	if ($post->post_parent)	{
@@ -122,19 +132,19 @@ function get_root_parent($post) {
 
 
 function socialcard($arr) {
-	
+
 	/*	This function is used by vassar_socialcard() in inc/template-tags.php
-	
+
 	*/
-	
+
 	foreach ($arr as $key => $value) {
 		$markup .= PHP_EOL;
-		
+
 		//	Some values appear in both Facebook and Twitter tags
 		//	Let's deal with those first
 		if (strpos($key, 'image') !== false) {
 			/* "The provided 'og:image' properties are not yet available because new images are processed asynchronously. To ensure shares of new URLs include an image, specify the dimensions using 'og:image:width' and 'og:image:height' tags." */
-				
+
 			$local_image_url = wp_make_link_relative($value);
 			$local_image_url = $_SERVER['DOCUMENT_ROOT'].$local_image_url;
 			if(file_exists($local_image_url))
@@ -143,7 +153,7 @@ function socialcard($arr) {
 			$markup .= '<meta name="og:image:width" content="'.$image_width.'">';
 			$markup .= '<meta name="og:image:height" content="'.$image_height.'">';
 
-			
+
 			$markup .= '<meta name="twitter:card" content="summary_large_image">';
 			$markup .= '<meta name="twitter:image" content="'.$value.'">'.PHP_EOL.'<meta property="og:image" content="'.$value.'">';
 		}
@@ -151,7 +161,7 @@ function socialcard($arr) {
 			$value = strip_tags($value);
 			$markup .= '<meta name="twitter:title" content="'.$value.'">'.PHP_EOL.'<meta property="og:title" content="'.$value.'">';
 		}
-		if (strpos($key, 'description') !== false) 
+		if (strpos($key, 'description') !== false)
 			$markup .= '<meta name="twitter:description" content="'.$value.'">'.PHP_EOL.'<meta property="og:description" content="'.$value.'">';
 
 
@@ -179,14 +189,14 @@ function socialcard($arr) {
 add_action( 'after_setup_theme', 'wpdocs_theme_setup' );
 
 function wpdocs_theme_setup() {
-    
+
     //  This image size would be displayed in blog post listings; say, on the News section of an Offices site. It's referenced by the function vassar_post_thumbnail(), defined in vassar-parent/inc/template-tags.php. That function is called in vassar-parent/template-parts/content.php (content.php is the file containing the template code for blog posts).
-    
+
     //  If you need a different sized thumbnail to be displayed for posts, you could override the default blog template by creating a /template-parts folder in your child theme and setting up a copy of content.php in that folder. Then defining a new image size in your child theme's functions.php file, and reference it in the new content.php override file.
-    
+
    add_image_size( 'news-thumbnail-size', 220, 220, true );
-}    
- 
+}
+
 	/*	Post types */
 
 
@@ -363,7 +373,7 @@ add_action('init', 'replace_jquery');
 /**
  * Enqueue scripts and styles.
  */
- 
+
 /*	Register early */
 
 function register_vassar_scripts() {
@@ -418,7 +428,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 
 /*	Gutenberg overrides
 	=================== */
-	
+
 /*	Replacing the four ludicrously large font sizes with a tasteful "intro" size */
 add_theme_support( 'editor-font-sizes', array(
 		array(
@@ -480,20 +490,20 @@ function wpb_load_widget() {
 }
 add_action( 'widgets_init', 'wpb_load_widget' );
 
-// Creating the widget 
+// Creating the widget
 class wpb_widget extends WP_Widget {
 
 function __construct() {
 parent::__construct(
 
 // Base ID of your widget
-'wpb_widget', 
+'wpb_widget',
 
 // Widget name will appear in UI
-__('WPBeginner Widget', 'wpb_widget_domain'), 
+__('WPBeginner Widget', 'wpb_widget_domain'),
 
 // Widget description
-array( 'description' => __( 'Sample widget based on WPBeginner Tutorial', 'wpb_widget_domain' ), ) 
+array( 'description' => __( 'Sample widget based on WPBeginner Tutorial', 'wpb_widget_domain' ), )
 );
 }
 
@@ -511,8 +521,8 @@ echo $args['before_title'] . $title . $args['after_title'];
 echo __( 'Hello, World!', 'wpb_widget_domain' );
 echo $args['after_widget'];
 }
-		
-// Widget Backend 
+
+// Widget Backend
 public function form( $instance ) {
 if ( isset( $instance[ 'title' ] ) ) {
 $title = $instance[ 'title' ];
@@ -523,12 +533,12 @@ $title = __( 'New title', 'wpb_widget_domain' );
 // Widget admin form
 ?>
 <p>
-<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 </p>
-<?php 
+<?php
 }
-	
+
 // Updating widget replacing old instances with new
 public function update( $new_instance, $old_instance ) {
 $instance = array();
@@ -545,9 +555,9 @@ return $instance;
 
 function kk_in_widget_form($t,$return,$instance) {
 	/*	kk_in_widget_form() is a function invoked by the WP action "in_widget_form" (https://developer.wordpress.org/reference/hooks/in_widget_form/). That hook has three parameters: $this (the current widget instance), $return, and $instance. In this case, $instance is the set of options we want to add to the widget.
-	
+
 	*/
-	
+
     $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'text' => '', 'float' => 'none') );
     if ( !isset($instance['float']) )
         $instance['float'] = null;
@@ -605,7 +615,7 @@ add_filter('dynamic_sidebar_params', 'kk_dynamic_sidebar_params');
 function slugify($string){
 	// /[^A-Za-z0-9-]+/
 	//     $final_string = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
-	
+
 	//	Get rid of multiple spaces
 	$final_string = str_ireplace('  ', ' ', $string);
 
@@ -615,9 +625,9 @@ function slugify($string){
     $final_string = strtolower(trim(preg_replace($replace_pattern, '-', $final_string), '-'));
 
 	//	get rid of multiple hyphens because I'm OCD about this sort of thing
-	//	https://stackoverflow.com/a/29865564/6784304	
+	//	https://stackoverflow.com/a/29865564/6784304
     $final_string = preg_replace('/-+/', '-', $final_string);
-    
+
     return $final_string;
 }
 
@@ -641,7 +651,7 @@ add_filter( 'post_gallery', 'my_gallery_shortcode', 10, 3 );
 
 
 /*	FAQs
-	==== 
+	====
 	https://developer.wordpress.org/reference/hooks/the_content/
 	https://stackoverflow.com/questions/1445506/get-content-between-two-strings-php/1445528
 	https://randomdrake.com/2010/04/27/creating-a-table-of-contents-from-html-in-php-with-domdocument-and-no-regex/
@@ -653,9 +663,9 @@ add_filter( 'the_content', 'filter_the_content_in_the_main_loop' );
 
 
 function filter_the_content_in_the_main_loop( $content ) {
-	
+
 	/*	Link phone numbers */
-	
+
 	$pattern = '/\(?(\d{3})\)?[-. ](\d{3})[-.\x{2013}\x{2014}](\d{4})/u';
 	$replacement = '<a href="tel:+1$1$2$3">($1) $2-$3</a>';
 	$content = preg_replace($pattern, $replacement, $content);
@@ -664,9 +674,9 @@ function filter_the_content_in_the_main_loop( $content ) {
 	/*	Had a situation come up on http://offices.vassar.edu/international-programs/health-safety/ where
 		some numbers with the international code were added and manually linked. At that point, the
 		auto-linker then relinked the standard phone number inside the already-linked code.
-		
+
 		What follows is a hack: it looks for manually added, double-linked numbers and removes
-		the autolink. What the code should really be doing is auto-linking all numbers, including 
+		the autolink. What the code should really be doing is auto-linking all numbers, including
 		ones that include the 0XX country code; looking into this.
 	*/
 
@@ -674,67 +684,67 @@ function filter_the_content_in_the_main_loop( $content ) {
 	$replacementWithIntlNum = '<a href="tel:+0111$1$2$3">011-1-($1) $2-$3</a>';
 
 	$content = preg_replace($patternWithIntlNum, $replacementWithIntlNum, $content);
-	
+
 
 	/*	Strip out target=new */
 
 //	$content = preg_replace("_<a href=\"(.+?)\"((\w+=\".+?\")|\s*)*>_si", "<a href=\"$1\">", $content);
 
     //  When WordPress corrects a straight quote, it replaces it with an HTML entity. This was causing problems on FAQs, because I was searching for strings with ’ in them, since we enter curly quotes directly; we don't use the entities. That inconsistency meant that some FAQ titles weren't being converted to h2s with their own identities. The following str_replace turns everything into the regular characters.
-    
+
     $content = str_replace("&#8217;", "’", $content);
     $content = str_replace("'", "’", $content);
 
 
 	/*	FAQ formatting */
-		
+
 	if ( is_singular() && in_the_loop() && is_main_query() ) {
 		global $post;
 		$post_id = $post->ID;
 		$page_title = get_the_title($post_id);
-	
+
 		/*	Only do this if the page is an FAQs page and isn't already designated as having a table of contents. This is to avoid conflicts between the following code and the PageTOC plugin. */
-	
+
 		if( ( strpos($page_title, "FAQ") !== false) && ( !get_post_meta( $post_id, 'has-index', true ) ) ) {
-		    
+
 //		    echo 'true';
-	
+
 			$dom_document = new DOMDocument();
 			@$dom_document->loadHTML('<?xml encoding="utf-8" ?>' . $content);
 			$headers = $dom_document->getElementsByTagName('h3');
-		
+
 			foreach ($headers as $header) {
-			    
+
 				$header->setAttribute("align", "left");
 				$header_sanitized = trim($header->nodeValue);
-				
+
 				$header_sanitized = str_replace("'", "’", $header_sanitized);
 
                 $value = $header_sanitized;
-                
+
 //                echo $value;
 
 				$slug = slugify($value);
 
 				/*	Generate the table of contents */
-				
+
 			    $faq_toc .= '<li><a href="#'.$slug.'">'.$value.'</a></li>';
-		
-				/*	Add IDs to each h2 tag. This feels like a clumsy way of doing it, and if I knew more about DOMDoc, I might be able to have it assign attributes to specific nodes. That method is taking longer than I wanted, though, so I'll go with ireplace for now. 
+
+				/*	Add IDs to each h2 tag. This feels like a clumsy way of doing it, and if I knew more about DOMDoc, I might be able to have it assign attributes to specific nodes. That method is taking longer than I wanted, though, so I'll go with ireplace for now.
 				*/
-		
+
 			    $the_tag = '<h3>'.$value.'</h3>';
-			    
+
 //			    echo $the_tag;
 
 			    $the_tag_with_id = '<h2 id="'.$slug.'">'.$value.'</h2>';
-			    	    
+
 			    $content = str_replace($the_tag, $the_tag_with_id, $content);
-			    
+
 //			    echo '<div style="background: #eee">'.$content.'</div>';
 
 			}
-		
+
 		    $content = '<ul id="index" class="faq__index">'.$faq_toc.'</ul>'.$content.'<a class="faq__link-to-top" href="#index">Top</a>';
 
 		}
@@ -745,9 +755,9 @@ function filter_the_content_in_the_main_loop( $content ) {
 
 
 
-/*	LAZYBLOCKS 
+/*	LAZYBLOCKS
 	==========
-	
+
 	LazyBlocks exports PHP to define blocks created via the plugin - all you need is the plugin to be active.
 */
 
@@ -944,7 +954,7 @@ if ( function_exists( 'lazyblocks' ) ) :
         'condition' => array(
         ),
     ) );
-    
+
 endif;
 
 if ( function_exists( 'lazyblocks' ) ) :
@@ -966,7 +976,7 @@ if ( function_exists( 'lazyblocks' ) ) :
             ),
         ),
     ) );
-    
+
 endif;
 
 
@@ -980,13 +990,13 @@ function filter_document_title( $title ) {
 	if ($page_title) {
 		$site_name = get_bloginfo('name');
 		return $page_title.' – '.$site_name;
-	} else { 
-		return $title; 
+	} else {
+		return $title;
 	}
 }
 
 
-/*	submenu stuff 
+/*	submenu stuff
 	https://christianvarga.com/how-to-get-submenu-items-from-a-wordpress-menu-based-on-parent-or-sibling/
 */
 
@@ -997,7 +1007,7 @@ add_filter( 'wp_nav_menu_objects', 'my_wp_nav_menu_objects_sub_menu', 10, 2 );
 function my_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
   if ( isset( $args->sub_menu ) ) {
     $root_id = 0;
-    
+
     // find the current menu item
     foreach ( $sorted_menu_items as $menu_item ) {
       if ( $menu_item->current ) {
@@ -1006,7 +1016,7 @@ function my_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
         break;
       }
     }
-    
+
     // find the top level parent
     if ( ! isset( $args->direct_parent ) ) {
       $prev_root_id = $root_id;
@@ -1017,7 +1027,7 @@ function my_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
             // don't set the root_id to 0 if we've reached the top of the menu
             if ( $prev_root_id != 0 ) $root_id = $menu_item->menu_item_parent;
             break;
-          } 
+          }
         }
       }
     }
@@ -1035,7 +1045,7 @@ function my_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
         unset( $sorted_menu_items[$key] );
       }
     }
-    
+
     return $sorted_menu_items;
   } else {
     return $sorted_menu_items;
@@ -1066,5 +1076,3 @@ if (cfg('SITE__HAS_ADMIN_CSS')) {
 	}
 	add_action('admin_enqueue_scripts', 'admin_style');
 }
-
-
