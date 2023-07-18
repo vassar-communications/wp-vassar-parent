@@ -1,3 +1,10 @@
+July 18, 2023 - v-1.6.5
+======================
+
+## functions.php
+* Commented out: `$content = str_replace("'", "’", $content);` Megg noticed that this was causing problems on Gravity Forms.
+
+
 Oct 11, 2022 - v-1.6.4
 ======================
 
@@ -9,7 +16,7 @@ Oct 11, 2022 - v-1.6.3
 ======================
 
 ## template-parts/content.php
-* Removed some weird gremlin characters that suddenly started breaking the site (back-end server config change, maybe?) 
+* Removed some weird gremlin characters that suddenly started breaking the site (back-end server config change, maybe?)
 
 June 1, 2021 - v-1.6.2
 ======================
@@ -78,7 +85,7 @@ Feb 22, 2021 - v-1.3.1
 ## inc/template-tags.php
 * In vassar_entry_meta(), replaced the hardcoded comma delimiters for lists of tags and categories with two cfg variables, POST__CAT_DELIMITER and POST__TAG_DELIMITER. If unspecified, a comma is used.
 
- 
+
 
 Feb 19, 2021 - v-1.2
 ====================
@@ -120,20 +127,20 @@ Nov 30, 2020 - v-1.0.2
 
 ## functions.php
 * Added a priority of 100000 to the the_content filter. Unintuitively, this means a *lower* priority; the idea is to make sure the_content runs last.
-	
-	This is because I have a plugin, Dropdownizer, that parses blocks. Dropdownizer relies on WordPress's parse_blocks() function to pick out the individual Gutenberg blocks on a page; Dropdownizer then identifies any group with a class of "dropdown" and modifies the content. 
-	
+
+	This is because I have a plugin, Dropdownizer, that parses blocks. Dropdownizer relies on WordPress's parse_blocks() function to pick out the individual Gutenberg blocks on a page; Dropdownizer then identifies any group with a class of "dropdown" and modifies the content.
+
 	However, Dropdownizer *has* to have the raw post content with all the block designations still in place. WP grabs the post content and then renders all the blocks, removing those block designations (the special WP HTML comments) which means that by the time you call the the_content variable that you'd usually use when filtering WordPress content, there aren't any block designations left for parse_blocks() to parse. parse_blocks() can't find any blocks.
-	
+
 	So Dropdownizer can't accept the_content. It has to pull unmodified post content straight from the post object. It then reads the blocks from it, and modifies those as needed.
-	
+
 	However, what happened was the following:
 
 	- the filters in vassar_parent's functions.php were applied first: post content was scanned, phone numbers were linked, FAQs got formatted, etc.
 	- but then the Dropdownizer plugin ran. It wasn't accepting the modified content from the parent theme's functions.php, for the reasons I mentioned above; it was grabbing the unmodified post content straight from the post, doing its thing, and then returning the content. So it was wiping out - well, overriding - the modified content from the theme's filter.
 
 	In order to fix that, I had to make sure the plugin filter ran *first*. That way, the plugin gets the raw post content, still with all the block designations. It runs through that, modifies the blocks as needed, and then returns the modified content, at which point the functions.php file in vassar-parent takes over and does its thing.
-	
+
 * I noticed that, for some reason, the FAQ system started missing straight quotes. Maybe that's because it's accepting modified content from the plugin. In any case, I had to add another search-and-replace rule to functions: $content = str_replace("'", "’", $content);
 
 
@@ -217,7 +224,7 @@ June 10, 2020 - v-1
 ===================
 
 * Added back "single.php"
-* Added back "archive.php". This was so I could add a config variable, SITE__REDIRECT_ARCHIVES_TO_HOME. 
+* Added back "archive.php". This was so I could add a config variable, SITE__REDIRECT_ARCHIVES_TO_HOME.
 * Added cfg var, SITE__REDIRECT_ARCHIVES_TO_HOME. This means that if someone hits an archive page, they will be bounced to the site homepage rather than seeing the archive.
 * Added the following to functions.php:
 	** socialcard. This generates og: tags for Facebook and Twitter.
@@ -227,5 +234,3 @@ June 10, 2020 - v-1
 * Added updated Google Analytics/tag manager code
 * Added a CSS variable, --site-header-image. If a header image is set for the site, it's accessible here.
 * Added cfg var BLOG__SOMETHING_ELSE_FOR_HP_PAGINATION. Lets you specify something less out-of-date-sounding for the "Older posts" pagination item on the homepage.
-
-

@@ -99,7 +99,7 @@ if (cfg('SITE__NO_TAGLINE_IN_TITLE')) {
 	//  screwed up titles on archive pages; the page titles were the title
 	//  of the first post on the page, not the title of the archive. This
 	//  function is unneeded, since taglines can and should be set to empty,
-	//  so it should be removed at some point. 
+	//  so it should be removed at some point.
 	//
 	add_filter( 'pre_get_document_title', function ( $title ) {
 	        $title = get_bloginfo();
@@ -693,7 +693,7 @@ function filter_the_content_in_the_main_loop( $content ) {
     //  When WordPress corrects a straight quote, it replaces it with an HTML entity. This was causing problems on FAQs, because I was searching for strings with ’ in them, since we enter curly quotes directly; we don't use the entities. That inconsistency meant that some FAQ titles weren't being converted to h2s with their own identities. The following str_replace turns everything into the regular characters.
 
     $content = str_replace("&#8217;", "’", $content);
-    $content = str_replace("'", "’", $content);
+//    $content = str_replace("'", "’", $content);
 
 
 	/*	FAQ formatting */
