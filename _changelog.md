@@ -1,3 +1,10 @@
+Aug 28, 2023 - v-1.7
+======================
+
+## inc/template-tags.php
+* Added a custom field for the description meta tag. If this is present, it's used; if not, the excerpt is used instead.
+
+
 July 18, 2023 - v-1.6.5
 ======================
 

@@ -10,22 +10,39 @@
 
 if ( ! function_exists( 'vassar_socialcard' ) ) :
 	function vassar_socialcard() {
-	    
+		
 		global $post;
 		$page_id = $post->ID;
 		
 		//  First: Does the page have a specified feature image? If so, use that.
 		if ( has_post_thumbnail( $page_id ) ) {
-		    $image_array = wp_get_attachment_image_src( get_post_thumbnail_id( $page_id ), 'optional-size' );
-		    $image = $image_array[0];
+			$image_array = wp_get_attachment_image_src( get_post_thumbnail_id( $page_id ), 'optional-size' );
+			$image = $image_array[0];
 		}
 		//  No? Let's see if the site has a header image set.
 		else if(get_header_image() !== '')
-		    $image = get_header_image();
+			$image = get_header_image();
 		//  Nothing is set anywhere, so we'll use the default image.
-        else
-		    $image = get_stylesheet_directory_uri() . '/assets/images/feature-image.png';            
+		else
+			$image = get_stylesheet_directory_uri() . '/assets/images/feature-image.png';            
 		// endif;
+
+		// The page description
+		
+		$page_desc = '';
+
+		if(get_post_meta(get_the_ID(), 'meta_description', TRUE)) {
+			$page_desc = get_post_meta(get_the_ID(), 'meta_description', TRUE);
+		}
+		else {
+			if(is_singular()) {
+				$page_desc = get_the_excerpt($page_id);
+			}
+			else {
+				$page_desc = get_bloginfo( 'description' );
+			}
+		}
+
 		
 		if(is_singular()) {
 			$og_obj = array(
@@ -33,7 +50,7 @@ if ( ! function_exists( 'vassar_socialcard' ) ) :
 				"title" => get_the_title($page_id),
 				"twitter:username" => "_csilverman",
 				"og:url" => get_permalink($page_id),
-				"description" => get_the_excerpt($page_id)
+				"description" => $page_desc
 			);
 		
 			echo socialcard($og_obj);
@@ -44,7 +61,7 @@ if ( ! function_exists( 'vassar_socialcard' ) ) :
 				"title" => gw__get_site_title(),
 				"twitter:username" => "_csilverman",
 				"og:url" => esc_url( home_url( '/' ) ),
-				"description" => get_bloginfo( 'description' )
+				"description" => $page_desc
 			);
 		
 			echo socialcard($og_obj);
@@ -146,22 +163,22 @@ if ( ! function_exists( 'vassar_entry_meta' ) ) :
 			}
 		}
 
-    		edit_post_link(
-    			sprintf(
-    				wp_kses(
-    					/* translators: %s: Name of current post. Only visible to     screen readers */
-    					__( 'Edit post', 'vassar' ),
-    					array(
-    						'span' => array(
-    							'class' => array(),
-    						),
-    					)
-    				),
-    				get_the_title()
-    			),
-    			'<span class="edit-link">',
-    			'</span>'
-    		);
+			edit_post_link(
+				sprintf(
+					wp_kses(
+						/* translators: %s: Name of current post. Only visible to     screen readers */
+						__( 'Edit post', 'vassar' ),
+						array(
+							'span' => array(
+								'class' => array(),
+							),
+						)
+					),
+					get_the_title()
+				),
+				'<span class="edit-link">',
+				'</span>'
+			);
 	}
 endif;
 
@@ -275,13 +292,4 @@ function site_title() {
 	}
 	return $header;
 }
-
-
-
-
-
-
-
-
-
 
