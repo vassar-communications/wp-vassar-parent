@@ -1,3 +1,10 @@
+Apr 15, 2025 - v-1.8
+======================
+
+## functions.php
+* Dequeued some stylesheets
+* Added an extra font size to the Gutenberg styles
+
 Aug 28, 2023 - v-1.7
 ======================
 
